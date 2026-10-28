@@ -1,0 +1,10 @@
+{
+  "description": "Experience immersive scrolling with captivating animations designed for engaging user interaction, perfect for websites seeking to enhance visual storytelling.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

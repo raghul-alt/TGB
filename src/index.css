@@ -1,0 +1,34 @@
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,400i,500i&display=swap");
+@import 'tailwindcss';
+
+@font-face { font-family: "Cormorant Garamond:Bold Italic"; src: url("https://static.figma.com/font/CormorantGaramond-Italic_wght__1") format("woff2"); font-style: italic; font-weight: 700; }
+@font-face { font-family: "Cormorant Garamond:Medium"; src: url("https://static.figma.com/font/CormorantGaramond_wght__1") format("woff2"); font-style: normal; font-weight: 500; }
+@font-face { font-family: "Cormorant Garamond:Regular"; src: url("https://static.figma.com/font/CormorantGaramond_wght__1") format("woff2"); font-style: normal; font-weight: 400; }
+@font-face { font-family: "Cormorant Garamond:SemiBold Italic"; src: url("https://static.figma.com/font/CormorantGaramond-Italic_wght__1") format("woff2"); font-style: italic; font-weight: 600; }
+@font-face { font-family: "Inter:Italic"; src: url("https://static.figma.com/font/Inter_1") format("woff2"); font-style: italic; font-weight: 400; }
+@font-face { font-family: "Inter:Regular"; src: url("https://static.figma.com/font/Inter_1") format("woff2"); font-style: normal; font-weight: 400; }
+@font-face { font-family: "Inter:Semi Bold"; src: url("https://static.figma.com/font/Inter_1") format("woff2"); font-style: normal; font-weight: 600; }
+
+html, body { background: #fffdf0; }
+body { font-family: "Satoshi", "Inter:Regular", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+.f-sans { font-family: "Satoshi", system-ui, sans-serif; font-weight: 500; }
+.f-sans-r { font-family: "Satoshi", system-ui, sans-serif; font-weight: 400; }
+.f-serif { font-family: "Cormorant Garamond:Regular", serif; font-weight: 400; }
+.f-serif-m { font-family: "Cormorant Garamond:Medium", serif; font-weight: 500; }
+.f-serif-bi { font-family: "Cormorant Garamond:Bold Italic", serif; font-weight: 700; font-style: italic; }
+.f-serif-sbi { font-family: "Cormorant Garamond:SemiBold Italic", serif; font-weight: 600; font-style: italic; }
+.f-inter { font-family: "Inter:Regular", sans-serif; font-weight: 400; }
+.f-inter-i { font-family: "Inter:Italic", sans-serif; font-weight: 400; font-style: italic; }
+
+.shelf {
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(to bottom, #fffdf0, #eceadd);
+  box-shadow: inset 0 4px 4px #fff, -21px 20px 17px rgba(0,0,0,0.05), -9px 9px 13px rgba(0,0,0,0.09), -2px 2px 7px rgba(0,0,0,0.1);
+}
+.reveal { opacity: 0; transform: translateY(48px); transition: opacity 1.1s cubic-bezier(.2,.7,.2,1), transform 1.1s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+.field { background: rgba(247,245,240,0.1); color: #f7f5f0; padding: 14px 16px; font-size: 14px; outline: none; width: 100%; }
+.field::placeholder { color: #888; }
+.field:focus { box-shadow: inset 0 0 0 1px #c9a24b; }
+@media (prefers-reduced-motion: reduce) { .reveal { transition: none; opacity: 1; transform: none; } }
