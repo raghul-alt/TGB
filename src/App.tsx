@@ -280,7 +280,16 @@ const settle = ease(range(p, 0.04, 0.2));
        {/* Hero: stays stationary while the intro is revealed over it */}
         <div className="absolute inset-0 overflow-hidden bg-black">
           <div className="absolute inset-0">
-            <Layers srcs={["2a2bb", "e2cd8"]} />
+            <video
+  src={`${A}/Herovideo.mp4`}
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+  aria-hidden="true"
+  className="absolute inset-0 h-full w-full object-cover"
+/>
 
             <div
               className="absolute inset-0"
