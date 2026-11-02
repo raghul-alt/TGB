@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import NriPage from "./NriPage";
+import UpcomingPage from "./UpcomingPage";
 
 const A = "/assets";
 
@@ -292,15 +294,19 @@ const settle = ease(range(p, 0.04, 0.2));
             <Logo />
 
             <nav className="f-sans absolute left-1/2 top-[20px] flex -translate-x-1/2 gap-8 text-[15px] tracking-[0.5px] text-white">
-              {["PROJECTS", "ABOUT", "NRI"].map((n) => (
-                <a
-                  key={n}
-                  href="#"
-                  className="transition-opacity hover:opacity-70"
-                >
-                  {n}
-                </a>
-              ))}
+              {[
+  { label: "PROJECTS", href: "#/upcoming" },
+  { label: "ABOUT", href: "#/" },
+  { label: "NRI", href: "#/nri" },
+].map((item) => (
+  <a
+    key={item.label}
+    href={item.href}
+    className="transition-opacity hover:opacity-70"
+  >
+    {item.label}
+  </a>
+))}
             </nav>
           </header>
         </div>
@@ -1244,6 +1250,31 @@ transform: `translate3d(${imageMove * -30.4}vw, ${imageFollow + imageMove * 82}v
 
 
 export default function App() {
+  const [route, setRoute] = useState(
+    () => window.location.hash || "#/"
+  );
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setRoute(window.location.hash || "#/");
+      window.scrollTo(0, 0);
+    };
+
+    window.addEventListener("hashchange", handleRouteChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleRouteChange);
+    };
+  }, []);
+
+  if (route === "#/nri") {
+    return <NriPage />;
+  }
+
+  if (route === "#/upcoming") {
+    return <UpcomingPage />;
+  }
+
   return (
     <main className="bg-[#fffdf0]">
       <Immersive />
