@@ -331,11 +331,11 @@ const settle = ease(range(p, 0.04, 0.2));
             willChange: "clip-path",
           }}
         >
-          <div className="absolute inset-x-0 top-[13vh] flex justify-center">
+          <div className="absolute inset-x-0 top-[7vh] flex justify-center">
             <div
-              className="relative flex w-[min(47.5vw,82vh,684px)] items-start justify-between"
+              className="relative flex w-[min(40vw,70vh,560px)] items-start justify-between"
               style={{
-                transform: `scale(${lerp(1.22, 1, settle)})`,
+                transform: `scale(${lerp(1.08, 1, settle)})`,
                 transformOrigin: "50% 0%",
               }}
             >
@@ -347,8 +347,8 @@ const settle = ease(range(p, 0.04, 0.2));
                 <div className="shelf -mx-[2.45%] h-[20px]" />
               </div>
 
-              <div className="relative mt-[15.5%] w-[47.66%]">
-                <div className="relative aspect-[326/468] overflow-hidden rounded-[4px] bg-[#d9d9d9]">
+              <div className="relative isolate mt-[15.5%] w-[47.66%]">
+                <div className="relative z-10 aspect-[326/468] overflow-hidden rounded-[4px] bg-[#d9d9d9]">
                   <Layers srcs={["2263e", "763e4"]} />
                 </div>
 
@@ -357,14 +357,15 @@ const settle = ease(range(p, 0.04, 0.2));
                 <img
                   src={`${A}/5a274.png`}
                   alt=""
-                  className="absolute left-[93%] top-[54%] w-[44%]"
+                  className="pointer-events-none absolute z-0 left-[93%] top-[31%] w-[44%]"
                   style={{ transform: "scaleY(-1) rotate(180deg)" }}
                 />
               </div>
             </div>
           </div>
 
-          <p className="f-serif absolute bottom-[6vh] left-[clamp(20px,2.8vw,40px)] right-[clamp(20px,2.8vw,40px)] text-[clamp(28px,3.9vw,56px)] leading-[1.2] tracking-[-1.4px] text-[#1e1e1e]">
+          <p 
+          className="f-serif absolute bottom-[6vh] left-[clamp(20px,2.8vw,40px)] right-[clamp(20px,2.8vw,40px)] z-20 text-[clamp(28px,3.9vw,56px)] leading-[1.2] tracking-[-1.4px] text-[#1e1e1e]">
             {STATEMENT.map(([t, it], i) => (
               <span key={i} className={it ? "f-serif-sbi" : ""}>
                 {t}{" "}
@@ -463,7 +464,7 @@ const settle = ease(range(p, 0.04, 0.2));
 <div className="relative aspect-[3/2] max-h-[26vh] w-full overflow-hidden bg-[#d9d9d9]">
   {CHAPTERS.map((c, i) => {
     const revealProgress =
-      i === 0 ? enter : swaps[i - 1];
+  i === 0 ? 1 : swaps[i - 1];
 
     const hiddenTop = (1 - revealProgress) * 100;
 
@@ -672,8 +673,8 @@ function Experience() {
   const ref = useRef<HTMLElement>(null);
   const p = useProgress(ref);
 
-const reveal = ease(range(p, 0, 0.40));
-const grow = ease(range(p, 0.08, 0.45));
+const reveal = ease(range(p, 0, 0.80));
+const grow = ease(range(p, 0.16, 0.90));
   const [active, setActive] = useState<string | null>(null);
 
   
@@ -684,6 +685,7 @@ const categories = [
     text: "Shared spaces and thoughtful community planning create opportunities for meaningful connections.",
     grid: "col-start-1 row-span-2",
     decoration: "Connect.png",
+    decorationClass: "right-[-2%] top-[-2%] h-[58%] w-[82%]",
   },
   {
     name: "Unwind",
@@ -691,6 +693,7 @@ const categories = [
     text: "Thoughtfully designed spaces bring comfort, warmth, and a sense of ease to everyday life.",
     grid: "col-start-2 row-start-1",
     decoration: "unwind.png",
+    decorationClass: "right-[-5%] top-[-18%] h-[85%] w-[45%]",
   },
   {
     name: "Explore",
@@ -698,6 +701,7 @@ const categories = [
     text: "Green trails, open spaces, and thoughtfully designed surroundings invite new experiences every day.",
     grid: "col-start-2 row-start-2",
     decoration: "explore.png",
+    decorationClass: "right-0 top-[-22%] h-[145%] w-[70%]",
   },
   {
     name: "Thrive",
@@ -705,6 +709,7 @@ const categories = [
     text: "Wellness, nature, and shared spaces create opportunities to thrive together as a community.",
     grid: "col-start-3 row-start-1",
     decoration: "Thrive.png",
+    decorationClass: "right-[-1%] top-0 h-[58%] w-[42%]",
   },
   {
     name: "Belong",
@@ -712,6 +717,7 @@ const categories = [
     text: "A community offers opportunities to build lasting connections and feel part of something meaningful.",
     grid: "col-start-3 row-start-2",
     decoration: "Belong.png",
+    decorationClass: "right-[-10%] top-[-40%] h-[130%] w-[60%]",
   },
 ];
 
@@ -719,7 +725,7 @@ const categories = [
   return (
 <section
   ref={ref}
-className="pointer-events-none relative z-10 -mt-[100vh] h-[340vh] bg-transparent">
+className="pointer-events-none relative z-10 -mt-[100vh] h-[150vh] bg-transparent">
         <div
   className="pointer-events-auto sticky top-0 h-screen overflow-hidden bg-[#1b3022]"
   style={{
@@ -733,7 +739,7 @@ className="pointer-events-none relative z-10 -mt-[100vh] h-[340vh] bg-transparen
 <div className="absolute inset-0 z-0">
   {/* Static image layer: never scales with the reveal animation */}
   <img
-    src={`${A}/13b3a.png`}
+    src={`${A}/Experiencebg.png`}
     alt=""
     className="absolute inset-0 h-full w-full"
     style={{
@@ -772,11 +778,11 @@ className="pointer-events-none relative z-10 -mt-[100vh] h-[340vh] bg-transparen
         <div
           className="relative z-10 px-[clamp(20px,2.8vw,40px)] pt-[clamp(48px,12vh,120px)] text-[#f7f5f0]"
           style={{
-            opacity: range(p, 0, 0.12),
+            opacity: range(p, 0, 0.24),
             transform: `translateY(${lerp(
               40,
               -40,
-              ease(range(p, 0, 0.15))
+              ease(range(p, 0, 0.30))
             )}px)`,
           }}
         >
@@ -792,9 +798,9 @@ className="pointer-events-none relative z-10 -mt-[100vh] h-[340vh] bg-transparen
 
         {/* Interactive grid */}
         <div
-          className="absolute inset-x-[3.7%] top-[28%] bottom-[3%] z-20 grid grid-cols-[1fr_2fr_2fr] grid-rows-2 border-l border-t border-white/25"
+className="absolute inset-x-[3.7%] top-[28%] bottom-[3%] z-20 grid grid-cols-[0.9fr_1fr_1fr] grid-rows-2 border-l border-t border-white/25"
           style={{
-            opacity: range(p, 0.08, 0.25),
+            opacity: range(p, 0.16, 0.50),
             pointerEvents: reveal > 0.15 ? "auto" : "none",
           }}
           onMouseLeave={() => setActive(null)}
@@ -833,11 +839,11 @@ className="pointer-events-none relative z-10 -mt-[100vh] h-[340vh] bg-transparen
   src={`${A}/${category.decoration}`}
   alt=""
   aria-hidden="true"
-  className={`pointer-events-none absolute right-4 top-4 h-[90px] w-[120px] object-contain transition-all duration-500 ease-out md:right-8 md:top-8 md:h-[150px] md:w-[190px] ${
-    selected
-      ? "translate-y-0 opacity-100"
-      : "translate-y-3 opacity-0"
-  }`}
+  className={`pointer-events-none absolute object-contain transition-all duration-500 ease-out ${category.decorationClass} ${
+  selected
+    ? "translate-y-0 opacity-100"
+    : "translate-y-3 opacity-0"
+}`}
 />
 
                 <div
@@ -867,25 +873,25 @@ function GreatBuildsWay() {
       number: "01",
       title: "Discover",
       text: "We understand the land, the location, and the people who will shape the community before defining what it should become.",
-      imageTone: "linear-gradient(135deg, #53644b 0%, #87916a 48%, #263b2c 100%)",
+      image: "Discover.png",
     },
     {
       number: "02",
       title: "Design",
       text: "We transform that understanding into purposeful spaces where architecture, nature, and lifestyle come together.",
-      imageTone: "linear-gradient(135deg, #9b8269 0%, #c4a98a 48%, #554638 100%)",
+      image: "Design.png",
     },
     {
       number: "03",
       title: "Develop",
       text: "We bring every detail to life through disciplined planning, precise execution, and uncompromising standards of quality.",
-      imageTone: "linear-gradient(135deg, #75624e 0%, #c4a47d 48%, #3d382f 100%)",
+      image: "Develop.png",
     },
     {
       number: "04",
       title: "Deliver",
       text: "We create enduring communities that people are proud to own, live in, and be part of for years to come.",
-      imageTone: "linear-gradient(135deg, #314b32 0%, #87935a 48%, #1d3022 100%)",
+      image: "Deliver.png",
     },
   ];
 
@@ -950,17 +956,14 @@ const translateY = (1 - enter) * 100;
                         {step.title}
                     </h3>
 
-                    {/* Temporary frame: replace with the exported Figma image when available. */}
-                    <div
-className="relative aspect-[1.78/1] max-h-[46vh] w-full overflow-hidden bg-[#344637]"
-                      style={{ background: step.imageTone }}
-                      role="img"
-                      aria-label={`${step.title} step image placeholder`}
-                    >
-                      <span className="f-sans absolute inset-0 flex items-center justify-center bg-black/10 text-[11px] tracking-[1.5px] text-white/65">
-                        IMAGE ASSET TO BE ADDED
-                      </span>
-                    </div>
+                    <div className="relative aspect-[1.78/1] max-h-[46vh] w-full overflow-hidden bg-[#344637]">
+  <img
+    src={`${A}/${step.image}`}
+    alt={`${step.title} — The GreatBuild Way`}
+    className="absolute inset-0 size-full object-cover"
+    loading="lazy"
+  />
+</div>
 
 <p className="f-sans-r mt-[2.5vh] max-w-[520px] text-[clamp(14px,1.05vw,16px)] leading-[1.5] text-[#d8d1c5]">                      {step.text}
                     </p>
@@ -1178,7 +1181,7 @@ transform: `translate3d(${imageMove * -30.4}vw, ${imageFollow + imageMove * 82}v
                 <div
                   className="absolute inset-0"
                   style={{
-                    backgroundImage: `url("${A}/13b3a.png")`,
+                    backgroundImage: `url("${A}/Viewport.png")`,
                     backgroundSize: "500% 100%",
                     backgroundPosition: `${i * 25}% center`,
                     backgroundRepeat: "no-repeat",
