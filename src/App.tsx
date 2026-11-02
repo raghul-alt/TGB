@@ -603,14 +603,28 @@ function Pillars() {
   );
 }
 
+
 function Experience() {
   const ref = useRef<HTMLElement>(null);
   const p = useProgress(ref);
   const grow = ease(range(p, 0.15, 0.85));
+  const [active, setActive] = useState<string | null>(null);
+
+  const categories = [
+    { name: "Connect", grid: "col-start-1 row-span-2" },
+    { name: "Unwind", grid: "col-start-2 row-start-1" },
+    { name: "Explore", grid: "col-start-2 row-start-2" },
+    { name: "Thrive", grid: "col-start-3 row-start-1" },
+    { name: "Belong", grid: "col-start-3 row-start-2" },
+  ];
 
   return (
-    <section ref={ref} className="relative h-[220vh] bg-[#1b3022]">
+    <section
+      ref={ref}
+      className="relative h-[220vh] bg-[#1b3022]"
+    >
       <div className="sticky top-0 h-screen overflow-hidden">
+        {/* Expanding background image */}
         <div
           className="absolute overflow-hidden"
           style={{
@@ -625,17 +639,24 @@ function Experience() {
             src={`${A}/13b3a.png`}
             alt=""
             className="absolute inset-0 size-full object-cover"
-            style={{ transform: `scale(${lerp(1.15, 1, grow)})` }}
+            style={{
+              transform: `scale(${lerp(1.15, 1, grow)})`,
+            }}
           />
 
           <div className="absolute inset-0 bg-black/20" />
         </div>
 
+        {/* Heading */}
         <div
-          className="relative px-[clamp(20px,2.8vw,40px)] pt-[clamp(48px,12vh,120px)] text-[#f7f5f0]"
+          className="relative z-10 px-[clamp(20px,2.8vw,40px)] pt-[clamp(48px,12vh,120px)] text-[#f7f5f0]"
           style={{
             opacity: range(p, 0, 0.12),
-            transform: `translateY(${lerp(40, 0, ease(range(p, 0, 0.15)))}px)`,
+            transform: `translateY(${lerp(
+              40,
+              0,
+              ease(range(p, 0, 0.15))
+            )}px)`,
           }}
         >
           <p className="f-sans text-[14px] tracking-[-0.35px]">
@@ -643,9 +664,50 @@ function Experience() {
           </p>
 
           <h2 className="mt-[20px] max-w-[519px] text-[clamp(40px,3.9vw,56px)] leading-none tracking-[-1.4px]">
-            <span className="f-serif-m">Designed Around the </span>
-            <span className="f-serif-bi">Way You Live.</span>
+            <span className="f-serif-m block">
+              Designed Around the
+            </span>
+            <span className="f-serif-bi block">
+              Way You Live.
+            </span>
           </h2>
+        </div>
+
+        {/* Interactive lifestyle grid */}
+        <div
+          className="absolute inset-x-[3.7%] top-[42%] bottom-[3%] z-20 grid grid-cols-[1fr_2fr_2fr] grid-rows-2 border-l border-t border-white/25"
+          style={{
+            opacity: range(p, 0.08, 0.25),
+            pointerEvents: grow > 0.15 ? "auto" : "none",
+          }}
+        >
+          {categories.map((item) => {
+            const selected = active === item.name;
+
+            return (
+              <button
+                key={item.name}
+                type="button"
+                onMouseEnter={() => setActive(item.name)}
+                onMouseLeave={() => setActive(null)}
+                onFocus={() => setActive(item.name)}
+                onBlur={() => setActive(null)}
+                onClick={() =>
+                  setActive(selected ? null : item.name)
+                }
+                aria-pressed={selected}
+                className={`${item.grid} relative min-h-0 min-w-0 overflow-hidden border-b border-r border-white/25 p-4 text-left transition-colors duration-500 ease-in-out md:p-6 ${
+                  selected
+                    ? "bg-[#fffdf0] text-[#1b3022]"
+                    : "bg-transparent text-white"
+                }`}
+              >
+                <span className="f-serif-bi block text-[20px] transition-colors duration-500 md:text-[26px]">
+                  {item.name}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </section>
