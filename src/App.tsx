@@ -16,31 +16,78 @@ const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 const lerp = (a: number, b: number, t: number) =>
   a + (b - a) * t;
 
+
+
+
 function useProgress(ref: RefObject<HTMLElement | null>) {
   const [p, setP] = useState(0);
 
   useEffect(() => {
     let raf = 0;
 
-    const tick = () => {
-      const el = ref.current;
+    const update = () => {
+      raf = 0;
 
-      if (el) {
-        const r = el.getBoundingClientRect();
-        const total = r.height - window.innerHeight;
-        setP(clamp(-r.top / (total || 1)));
+      const el = ref.current;
+      if (!el) return;
+
+      const r = el.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const total = r.height - viewportHeight;
+
+      // Skip React updates for sections far outside the viewport.
+      const nearViewport =
+        r.bottom > -viewportHeight &&
+        r.top < viewportHeight * 2;
+
+      if (!nearViewport) {
+        const settledProgress = r.bottom <= 0 ? 1 : 0;
+
+        setP((current) =>
+          Math.abs(current - settledProgress) < 0.0001
+            ? current
+            : settledProgress
+        );
+
+        return;
       }
 
-      raf = requestAnimationFrame(tick);
+      const next = clamp(-r.top / (total || 1));
+
+      setP((current) =>
+        Math.abs(current - next) < 0.0001
+          ? current
+          : next
+      );
     };
 
-    raf = requestAnimationFrame(tick);
+    const scheduleUpdate = () => {
+      if (!raf) {
+        raf = requestAnimationFrame(update);
+      }
+    };
 
-    return () => cancelAnimationFrame(raf);
+    scheduleUpdate();
+
+    window.addEventListener("scroll", scheduleUpdate, {
+      passive: true,
+    });
+
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, [ref]);
 
   return p;
 }
+
+
+
 
 function Reveal({
   children,
@@ -168,8 +215,8 @@ function Immersive() {
   const p = useProgress(ref);
 
   // Hero-to-intro reveal progress.
-  const cover = ease(range(p, 0, 0.14));
-  const settle = ease(range(p, 0.04, 0.2));
+const cover = ease(range(p, 0, 0.14));
+const settle = ease(range(p, 0.04, 0.2));
 
   // Existing project transition timings remain unchanged.
   const rise = ease(range(p, 0.3, 0.42));
@@ -227,8 +274,8 @@ function Immersive() {
 
   return (
     <section ref={ref} className="relative h-[700vh] bg-[#fffdf0]">
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Hero: stays stationary while the intro is revealed over it */}
+<div className="sticky top-0 h-screen overflow-hidden bg-[#1b3022]">
+       {/* Hero: stays stationary while the intro is revealed over it */}
         <div className="absolute inset-0 overflow-hidden bg-black">
           <div className="absolute inset-0">
             <Layers srcs={["2a2bb", "e2cd8"]} />
@@ -509,19 +556,19 @@ const PILLARS = [
   },
   {
     name: "Sustainability",
-    img: "pillars/pil_sustain.jpg",
+    img: "pillars/Sustainability.png",
     title: "Nature is part of the foundation.",
     text: "We thoughtfully integrate green spaces, landscapes, and responsible development to create healthier environments that endure.",
   },
   {
     name: "Purpose",
-    img: "pillars/pil_purpose.jpg",
+    img: "pillars/Purpose.png",
     title: "Every community begins with a reason.",
     text: "We design around the way people live, work and grow, so every space has a purpose behind it.",
   },
   {
     name: "Longevity",
-    img: "pillars/pil_longevity.jpg",
+    img: "pillars/Longevity.png",
     title: "Built for today. Considered for tomorrow.",
     text: "Quality materials and enduring planning create homes and communities that age gracefully for generations.",
   },
@@ -531,7 +578,7 @@ function Pillars() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="bg-[#fffdf0] px-[clamp(20px,2.8vw,40px)] pb-[80px] pt-[120px]">
+    <section className="relative z-0 bg-[#fffdf0] px-[clamp(20px,2.8vw,40px)] pb-[80px] pt-[120px]">
       <Reveal>
         <p className="f-sans text-[14px] tracking-[-0.35px] text-[#1e1e1e]">
           THE FOUR <i>PILLARS</i>
@@ -550,15 +597,18 @@ function Pillars() {
 
             return (
               <button
-                key={pl.name}
-                type="button"
-                onMouseEnter={() => setOpen(i)}
-                onFocus={() => setOpen(i)}
-                onClick={() => setOpen(i)}
-                aria-expanded={on}
-                className="group relative min-h-[80px] min-w-0 overflow-hidden text-left transition-[flex-grow] duration-[900ms] ease-[cubic-bezier(.65,0,.35,1)]"
-                style={{ flexGrow: on ? 3.6 : 1, flexBasis: 0 }}
-              >
+  key={pl.name}
+  type="button"
+  onMouseEnter={() => setOpen(i)}
+  onFocus={() => setOpen(i)}
+  onClick={() => setOpen(i)}
+  aria-expanded={on}
+  className="group relative min-h-[80px] min-w-0 overflow-hidden text-left"
+  style={{
+    flex: on ? "3.6 1 0%" : "1 1 0%",
+    transition: "flex 900ms cubic-bezier(.65,0,.35,1)",
+  }}
+>
                 <img
                   src={`${A}/${pl.img}`}
                   alt=""
@@ -574,7 +624,7 @@ function Pillars() {
                   }`}
                 />
 
-                <span className="f-serif-bi absolute left-[16px] top-[16px] text-[18px] text-white">
+                <span className="f-serif-bi absolute left-[16px] top-[16px] text-[24px] text-white md:text-[28px]">
                   {pl.name}
                 </span>
 
@@ -586,11 +636,11 @@ function Pillars() {
                     transitionDelay: on ? "350ms" : "0ms",
                   }}
                 >
-                  <p className="f-sans text-[16px] leading-[1.4]">
+                  <p className="f-sans text-[20px] leading-[1.4]">
                     {pl.title}
                   </p>
 
-                  <p className="f-sans-r mt-[4px] text-[14px] leading-[1.5] text-white/75">
+                  <p className="f-sans-r mt-[4px] text-[16px] leading-[1.5] text-white/75">
                     {pl.text}
                   </p>
                 </div>
@@ -603,50 +653,106 @@ function Pillars() {
   );
 }
 
-
 function Experience() {
   const ref = useRef<HTMLElement>(null);
   const p = useProgress(ref);
-  const grow = ease(range(p, 0.15, 0.85));
+
+const reveal = ease(range(p, 0, 0.40));
+const grow = ease(range(p, 0.08, 0.45));
   const [active, setActive] = useState<string | null>(null);
 
-  const categories = [
-    { name: "Connect", grid: "col-start-1 row-span-2" },
-    { name: "Unwind", grid: "col-start-2 row-start-1" },
-    { name: "Explore", grid: "col-start-2 row-start-2" },
-    { name: "Thrive", grid: "col-start-3 row-start-1" },
-    { name: "Belong", grid: "col-start-3 row-start-2" },
-  ];
+  
+const categories = [
+  {
+    name: "Connect",
+    title: "Places Designed to Bring People Together.",
+    text: "Shared spaces and thoughtful community planning create opportunities for meaningful connections.",
+    grid: "col-start-1 row-span-2",
+    decoration: "Connect.png",
+  },
+  {
+    name: "Unwind",
+    title: "Spaces Designed for Living.",
+    text: "Thoughtfully designed spaces bring comfort, warmth, and a sense of ease to everyday life.",
+    grid: "col-start-2 row-start-1",
+    decoration: "unwind.png",
+  },
+  {
+    name: "Explore",
+    title: "Discover Something New.",
+    text: "Green trails, open spaces, and thoughtfully designed surroundings invite new experiences every day.",
+    grid: "col-start-2 row-start-2",
+    decoration: "explore.png",
+  },
+  {
+    name: "Thrive",
+    title: "Room to Grow.",
+    text: "Wellness, nature, and shared spaces create opportunities to thrive together as a community.",
+    grid: "col-start-3 row-start-1",
+    decoration: "Thrive.png",
+  },
+  {
+    name: "Belong",
+    title: "A Place to Belong.",
+    text: "A community offers opportunities to build lasting connections and feel part of something meaningful.",
+    grid: "col-start-3 row-start-2",
+    decoration: "Belong.png",
+  },
+];
+
 
   return (
-    <section
-      ref={ref}
-      className="relative h-[220vh] bg-[#1b3022]"
-    >
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Expanding background image */}
+<section
+  ref={ref}
+className="pointer-events-none relative z-10 -mt-[100vh] h-[340vh] bg-transparent">
         <div
-          className="absolute overflow-hidden"
-          style={{
-            left: `${lerp(3, 0, grow)}%`,
-            right: `${lerp(3, 0, grow)}%`,
-            top: `${lerp(38, 0, grow)}%`,
-            bottom: `${lerp(6, 0, grow)}%`,
-            borderRadius: `${lerp(4, 0, grow)}px`,
-          }}
-        >
-          <img
-            src={`${A}/13b3a.png`}
-            alt=""
-            className="absolute inset-0 size-full object-cover"
-            style={{
-              transform: `scale(${lerp(1.15, 1, grow)})`,
-            }}
-          />
+  className="pointer-events-auto sticky top-0 h-screen overflow-hidden bg-[#1b3022]"
+  style={{
+    clipPath: `inset(${(1 - reveal) * 100}% 0 0 0)`,
+    WebkitClipPath: `inset(${(1 - reveal) * 100}% 0 0 0)`,
+    willChange: "clip-path",
+    pointerEvents: reveal > 0.02 ? "auto" : "none",
+  }}
+>
+        {/* Fixed viewport image with an independently animated reveal frame */}
+<div className="absolute inset-0 z-0">
+  {/* Static image layer: never scales with the reveal animation */}
+  <img
+    src={`${A}/13b3a.png`}
+    alt=""
+    className="absolute inset-0 h-full w-full"
+    style={{
+      objectFit: "cover",
+      objectPosition: "center center",
+      transform: "none",
+      transition: "none",
+    }}
+  />
 
-          <div className="absolute inset-0 bg-black/20" />
-        </div>
+  <div className="absolute inset-0 bg-black/25" />
 
+  {/* Animated frame overlay */}
+  <div
+    className="absolute inset-0 overflow-hidden"
+    style={{
+      clipPath: `inset(
+        ${lerp(38, 0, grow)}%
+        ${lerp(3, 0, grow)}%
+        ${lerp(6, 0, grow)}%
+        ${lerp(3, 0, grow)}%
+        round ${lerp(4, 0, grow)}px
+      )`,
+      WebkitClipPath: `inset(
+        ${lerp(38, 0, grow)}%
+        ${lerp(3, 0, grow)}%
+        ${lerp(6, 0, grow)}%
+        ${lerp(3, 0, grow)}%
+        round ${lerp(4, 0, grow)}px
+      )`,
+      pointerEvents: "none",
+    }}
+  />
+</div>
         {/* Heading */}
         <div
           className="relative z-10 px-[clamp(20px,2.8vw,40px)] pt-[clamp(48px,12vh,120px)] text-[#f7f5f0]"
@@ -654,7 +760,7 @@ function Experience() {
             opacity: range(p, 0, 0.12),
             transform: `translateY(${lerp(
               40,
-              0,
+              -40,
               ease(range(p, 0, 0.15))
             )}px)`,
           }}
@@ -664,48 +770,71 @@ function Experience() {
           </p>
 
           <h2 className="mt-[20px] max-w-[519px] text-[clamp(40px,3.9vw,56px)] leading-none tracking-[-1.4px]">
-            <span className="f-serif-m block">
-              Designed Around the
-            </span>
-            <span className="f-serif-bi block">
-              Way You Live.
-            </span>
+            <span className="f-serif-m block">Designed Around the</span>
+            <span className="f-serif-bi block">Way You Live.</span>
           </h2>
         </div>
 
-        {/* Interactive lifestyle grid */}
+        {/* Interactive grid */}
         <div
-          className="absolute inset-x-[3.7%] top-[42%] bottom-[3%] z-20 grid grid-cols-[1fr_2fr_2fr] grid-rows-2 border-l border-t border-white/25"
+          className="absolute inset-x-[3.7%] top-[28%] bottom-[3%] z-20 grid grid-cols-[1fr_2fr_2fr] grid-rows-2 border-l border-t border-white/25"
           style={{
             opacity: range(p, 0.08, 0.25),
-            pointerEvents: grow > 0.15 ? "auto" : "none",
+            pointerEvents: reveal > 0.15 ? "auto" : "none",
           }}
+          onMouseLeave={() => setActive(null)}
         >
-          {categories.map((item) => {
-            const selected = active === item.name;
+          {categories.map((category) => {
+            const selected = active === category.name;
 
             return (
-              <button
-                key={item.name}
-                type="button"
-                onMouseEnter={() => setActive(item.name)}
-                onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive(item.name)}
-                onBlur={() => setActive(null)}
-                onClick={() =>
-                  setActive(selected ? null : item.name)
-                }
-                aria-pressed={selected}
-                className={`${item.grid} relative min-h-0 min-w-0 overflow-hidden border-b border-r border-white/25 p-4 text-left transition-colors duration-500 ease-in-out md:p-6 ${
-                  selected
-                    ? "bg-[#fffdf0] text-[#1b3022]"
-                    : "bg-transparent text-white"
-                }`}
+              <div
+                key={category.name}
+                className={`${category.grid} relative min-h-0 min-w-0 overflow-hidden border-b border-r border-white/25 transition-colors duration-500`}
+                style={{
+                  backgroundColor: selected ? "#f5f2e9" : "transparent",
+                }}
+                onMouseEnter={() => setActive(category.name)}
               >
-                <span className="f-serif-bi block text-[20px] transition-colors duration-500 md:text-[26px]">
-                  {item.name}
-                </span>
-              </button>
+                <button
+                  type="button"
+                  onFocus={() => setActive(category.name)}
+                  onBlur={() => setActive(null)}
+                  onClick={() =>
+                    setActive(selected ? null : category.name)
+                  }
+                  aria-expanded={selected}
+                  className={`absolute left-0 top-0 z-10 p-4 text-left transition-colors duration-500 md:p-6 ${
+                    selected ? "text-[#1b3022]" : "text-white"
+                  }`}
+                >
+                  <span className="f-serif-bi text-[20px] md:text-[26px]">
+                    {category.name}
+                  </span>
+                </button>
+
+                
+<img
+  src={`${A}/${category.decoration}`}
+  alt=""
+  aria-hidden="true"
+  className={`pointer-events-none absolute right-4 top-4 h-[90px] w-[120px] object-contain transition-all duration-500 ease-out md:right-8 md:top-8 md:h-[150px] md:w-[190px] ${
+    selected
+      ? "translate-y-0 opacity-100"
+      : "translate-y-3 opacity-0"
+  }`}
+/>
+
+                <div
+                  className={`pointer-events-none absolute bottom-0 left-0 right-0 p-4 transition-opacity duration-300 md:p-7 ${
+                    selected ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <p className="f-sans-r text-[16px] leading-[1.5] text-[#1b3022] md:text-[18px]">
+                    {category.title} {category.text}
+                  </p>
+                </div>
+              </div>
             );
           })}
         </div>
@@ -713,6 +842,406 @@ function Experience() {
     </section>
   );
 }
+  
+function GreatBuildsWay() {
+  const ref = useRef<HTMLElement>(null);
+  const p = useProgress(ref);
+
+  const steps = [
+    {
+      number: "01",
+      title: "Discover",
+      text: "We understand the land, the location, and the people who will shape the community before defining what it should become.",
+      imageTone: "linear-gradient(135deg, #53644b 0%, #87916a 48%, #263b2c 100%)",
+    },
+    {
+      number: "02",
+      title: "Design",
+      text: "We transform that understanding into purposeful spaces where architecture, nature, and lifestyle come together.",
+      imageTone: "linear-gradient(135deg, #9b8269 0%, #c4a98a 48%, #554638 100%)",
+    },
+    {
+      number: "03",
+      title: "Develop",
+      text: "We bring every detail to life through disciplined planning, precise execution, and uncompromising standards of quality.",
+      imageTone: "linear-gradient(135deg, #75624e 0%, #c4a47d 48%, #3d382f 100%)",
+    },
+    {
+      number: "04",
+      title: "Deliver",
+      text: "We create enduring communities that people are proud to own, live in, and be part of for years to come.",
+      imageTone: "linear-gradient(135deg, #314b32 0%, #87935a 48%, #1d3022 100%)",
+    },
+  ];
+
+  return (
+    <section
+      ref={ref}
+      className="relative h-[500vh] bg-[#1b3022]"
+      aria-label="The Greatbuild Way"
+    >
+      <div className="sticky top-0 h-screen overflow-hidden bg-[#1b3022] text-[#f9f6e6]">
+        {/* This heading stays fixed while the four steps change on scroll. */}
+        <header className="absolute inset-x-0 top-0 z-20 h-[27vh] border-b border-white/35 px-[clamp(20px,2.8vw,40px)] pt-[3vh]">
+          <p className="f-sans text-[14px] tracking-[-0.35px]">
+            THE GREATBUILD WAY
+          </p>
+
+          <h2 className="mt-[20px] text-[clamp(40px,3.9vw,56px)] leading-[1.2] tracking-[-1.4px]">
+            <span className="f-serif-m">Purpose in </span>
+            <span className="f-serif-bi">Every Step</span>
+          </h2>
+        </header>
+
+        {/* Each step occupies the same frame and crossfades vertically. */}
+        <div className="absolute inset-x-0 bottom-0 top-[27vh]">
+          {steps.map((step, i) => {
+            const start = i / steps.length;
+
+const enter =
+  i === 0
+    ? 1
+    : ease(range(p, start, start + 0.18));
+
+const opacity = 1;
+
+const translateY = (1 - enter) * 100;
+
+            return (
+              <article
+  key={step.number}
+  className="absolute inset-0 px-[clamp(20px,2.8vw,40px)]"
+  aria-hidden={enter < 0.95}
+  style={{
+    opacity: 1,
+    transform: `translate3d(0, ${translateY}%, 0)`,
+    zIndex: i + 1,
+    pointerEvents: enter > 0.95 ? "auto" : "none",
+    willChange: "transform",
+    backgroundColor: "#1b3022",
+  }}
+              >
+                <div className="grid h-full grid-cols-[44%_56%]">
+                  {/* Large step number on the left, matching the Figma frame. */}
+                  <div className="flex items-start pt-[9vh]">
+                    <span className="f-serif-bi text-[clamp(100px,12vw,180px)] leading-[0.9] tracking-[-7px]">
+                      {step.number}
+                    </span>
+                  </div>
+
+                  {/* Step title, wide image frame and supporting copy on the right. */}
+<div className="flex min-w-0 flex-col items-start pt-[5vh]">
+<h3 className="f-serif-bi mb-[3vh] text-[clamp(28px,2.5vw,38px)] leading-none">
+                        {step.title}
+                    </h3>
+
+                    {/* Temporary frame: replace with the exported Figma image when available. */}
+                    <div
+className="relative aspect-[1.78/1] max-h-[46vh] w-full overflow-hidden bg-[#344637]"
+                      style={{ background: step.imageTone }}
+                      role="img"
+                      aria-label={`${step.title} step image placeholder`}
+                    >
+                      <span className="f-sans absolute inset-0 flex items-center justify-center bg-black/10 text-[11px] tracking-[1.5px] text-white/65">
+                        IMAGE ASSET TO BE ADDED
+                      </span>
+                    </div>
+
+<p className="f-sans-r mt-[2.5vh] max-w-[520px] text-[clamp(14px,1.05vw,16px)] leading-[1.5] text-[#d8d1c5]">                      {step.text}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
+function ImpactSequence() {
+  const ref = useRef<HTMLElement>(null);
+  const p = useProgress(ref);
+
+  const projects = ["b9df2", "7caa8", "9dd89"];
+
+  /*
+   * SHARED SCROLL TIMELINE
+   *
+   * Total section height: 460vh.
+   * Actual scroll distance: 360vh.
+   *
+   * 0–100vh: Viewport image conceals.
+   * 100–200vh: Our Impact Phase 1.
+   * 200–360vh: Phase 2.
+   */
+
+  const scrollVh = p * 340;
+
+  // Viewport image holds only during its own reveal.
+const revealHold = clamp(scrollVh, 0, 100);
+
+// Our Impact remains stationary until the collage and
+// headline have completely appeared (132vh).
+const collageHold = clamp(scrollVh, 0, 132);
+
+const viewportProgress = clamp(scrollVh / 100);
+
+const phase1Progress = clamp((scrollVh - 100) / 100);
+
+const sideSpread = ease(range(phase1Progress, 0.08, 0.32));
+
+const imageMove = ease(range(phase1Progress, 0.32, 0.98));
+
+// Image compensation starts only after the collage is complete.
+const imageFollow = clamp(scrollVh - 132, 0, 100);
+
+  const metrics = [
+    { number: "8+", label: "Years of Experience" },
+    { number: "3", label: "Projects Delivered" },
+    { number: "3+", label: "Communities Created" },
+    { number: "310+", label: "Happy Families" },
+  ];
+
+  return (
+    <section
+      ref={ref}
+      className="relative isolate z-10 h-[440vh] bg-[#1b3022] text-[#f7f5f0]"
+    >
+      {/* FULL-HEIGHT BACKGROUND GRID */}
+<div
+  className="pointer-events-none absolute inset-0 z-0 grid grid-cols-5"
+  style={{
+    transform: `translate3d(0, ${collageHold}vh, 0)`,
+  }}
+>
+  {[0, 1, 2, 3, 4].map((line) => (
+    <div
+      key={line}
+      className="h-full border-r border-white/[0.045]"
+    />
+  ))}
+</div>
+
+      {/* UNDERLAY — VISIBLE BEHIND THE VIEWPORT IMAGE */}
+      <div
+        className="pointer-events-none absolute left-0 top-0 z-0 h-screen w-full overflow-visible"
+        style={{
+          transform: `translate3d(0, ${collageHold}vh, 0)`,
+        }}
+      >
+
+        {/* BACKGROUND WORDS */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <span className="f-sans absolute left-[7%] top-[20%] whitespace-nowrap text-[clamp(40px,5.5vw,82px)] font-medium leading-none tracking-[-3px] text-white/[0.09]">
+            COMMUNITY
+          </span>
+
+          <span className="f-sans absolute right-[8%] top-[31%] whitespace-nowrap text-[clamp(40px,5.5vw,82px)] font-medium leading-none tracking-[-3px] text-white/[0.09]">
+            LONGEVITY
+          </span>
+
+          <span className="f-sans absolute left-[13%] top-[59%] whitespace-nowrap text-[clamp(40px,5.5vw,82px)] font-medium leading-none tracking-[-3px] text-white/[0.09]">
+            SUSTAINABILITY
+          </span>
+
+          <span className="f-sans absolute right-[16%] top-[75%] whitespace-nowrap text-[clamp(40px,5.5vw,82px)] font-medium leading-none tracking-[-3px] text-white/[0.09]">
+            PURPOSE
+          </span>
+        </div>
+
+        {/* FIVE VERTICAL DIVISIONS */}
+        <div className="absolute inset-0 z-[5] grid grid-cols-5">
+          {[1, 2, 3, 4].map((line) => (
+            <div
+              key={line}
+              className="h-full border-r border-white/[0.045]"
+            />
+          ))}
+        </div>
+
+        {/* OUR IMPACT LABEL */}
+        <div className="absolute left-1/2 top-[7vh] z-30 -translate-x-1/2 text-center">
+          <p className="f-sans text-[14px] tracking-[1px] text-[#f7f5f0]">
+            OUR <i>IMPACT</i>
+          </p>
+        </div>
+
+        {/* THREE IMAGES — EACH ELEMENT IS RENDERED ONLY ONCE */}
+        <div className="absolute left-1/2 top-[22vh] h-[48vh] w-[min(72vw,850px)] -translate-x-1/2 overflow-visible">
+
+          {/* IMAGE 1 — B9DF2 */}
+          <div
+            className="absolute top-0 z-10 h-full w-[35%] overflow-hidden"
+            style={{
+              left: `${32.5 - sideSpread * 27.5}%`,
+transform: `translate3d(${imageMove * 50.2}vw, ${imageFollow + imageMove * 23.5}vh, 0) rotate(${-7 * sideSpread * (1 - imageMove)}deg)`,            }}
+          >
+            <img
+              src={`${A}/${projects[0]}.png`}
+              alt=""
+              className="size-full object-cover"
+            />
+          </div>
+
+          {/* IMAGE 3 — 9DD89 */}
+          <div
+            className="absolute top-0 z-10 h-full w-[35%] overflow-hidden"
+            style={{
+              left: `${32.5 + sideSpread * 27.5}%`,
+transform: `translate3d(${imageMove * 11}vw, ${imageFollow + imageMove * 115.8}vh, 0) rotate(${7 * sideSpread * (1 - imageMove)}deg)`,            }}
+          >
+            <img
+              src={`${A}/${projects[2]}.png`}
+              alt=""
+              className="size-full object-cover"
+            />
+          </div>
+
+          {/* IMAGE 2 — 7CAA8 */}
+          <div
+            className="absolute left-[32.5%] top-0 z-30 h-full w-[35%] overflow-hidden"
+            style={{
+transform: `translate3d(${imageMove * -30.4}vw, ${imageFollow + imageMove * 82}vh, 0)`,
+            }}
+          >
+            <img
+              src={`${A}/${projects[1]}.png`}
+              alt=""
+              className="size-full object-cover"
+            />
+          </div>
+
+        </div>
+
+        {/* PHASE 1 HEADLINE */}
+        <div
+          className="absolute inset-x-0 bottom-[8vh] z-20 text-center"
+          style={{
+            opacity: sideSpread,
+            transform: `translateY(${(1 - sideSpread) * 35}px)`,
+          }}
+        >
+          <h2 className="text-[clamp(38px,4vw,58px)] leading-none tracking-[-1.5px]">
+            <span className="f-serif-m">Built on Experience.</span>
+            <br />
+            <span className="f-serif-bi">Proven by Results.</span>
+          </h2>
+        </div>
+
+      </div>
+
+      {/* VIEWPORT IMAGE — ON TOP OF THE UNDERLAY */}
+      <div
+        className="pointer-events-none absolute left-0 top-0 z-30 h-screen w-full"
+        style={{
+          transform: `translate3d(0, ${revealHold}vh, 0)`,
+        }}
+      >
+        <div className="absolute inset-0 flex">
+          {[0, 1, 2, 3, 4].map((i) => {
+            const stripProgress = ease(
+              range(
+                viewportProgress,
+                0.05 + i * 0.09,
+                0.48 + i * 0.09
+              )
+            );
+
+            return (
+              <div
+                key={i}
+                className="relative h-full w-1/5 shrink-0 overflow-hidden"
+                style={{
+                  transform: `translate3d(0, ${-stripProgress * 100}%, 0)`,
+                  willChange: "transform",
+                }}
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `url("${A}/13b3a.png")`,
+                    backgroundSize: "500% 100%",
+                    backgroundPosition: `${i * 25}% center`,
+                    backgroundRepeat: "no-repeat",
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* FIRST 100VH — NORMAL DOCUMENT FLOW */}
+      <div aria-hidden="true" className="relative h-screen" />
+
+      
+{/* PHASE 2 — FIGMA-MATCHED STAGGERED LAYOUT */}
+<div className="relative z-20 h-[280vh]">
+
+  {/* INTRODUCTORY PARAGRAPH */}
+<div className="absolute left-[20%] top-[135vh] w-[39%] max-w-[560px]">
+      <p className="f-sans-r text-[clamp(13px,1.1vw,16px)] leading-[1.6] text-[#d8d1c5]">
+      Our journey is reflected in more than numbers. It is measured by
+      the communities we have thoughtfully planned, the quality we
+      have consistently delivered, the relationships we have built,
+      and the trust we have earned along the way. Each milestone
+      represents our commitment to creating places that offer lasting
+      value, meaningful experiences, and a better way of living.
+    </p>
+  </div>
+
+  {/* 8+ — YEARS OF EXPERIENCE */}
+<div className="absolute left-[20%] top-[152vh]">
+      <p className="f-serif-m text-[clamp(40px,4.5vw,68px)] leading-none">
+      {metrics[0].number}
+    </p>
+    <p className="f-sans-r mt-2 text-[14px] text-[#d8d1c5]">
+      {metrics[0].label}
+    </p>
+  </div>
+
+  {/* 3 — PROJECTS DELIVERED */}
+<div className="absolute left-[40%] top-[185vh]">
+      <p className="f-serif-m text-[clamp(40px,4.5vw,68px)] leading-none">
+      {metrics[1].number}
+    </p>
+    <p className="f-sans-r mt-2 text-[14px] text-[#d8d1c5]">
+      {metrics[1].label}
+    </p>
+  </div>
+
+  {/* 3+ — COMMUNITIES CREATED */}
+<div className="absolute left-[60%] top-[216vh]">
+      <p className="f-serif-m text-[clamp(40px,4.5vw,68px)] leading-none">
+      {metrics[2].number}
+    </p>
+    <p className="f-sans-r mt-2 text-[14px] text-[#d8d1c5]">
+      {metrics[2].label}
+    </p>
+  </div>
+
+  {/* 310+ — HAPPY FAMILIES */}
+<div className="absolute left-[40%] top-[247vh]">
+      <p className="f-serif-m text-[clamp(40px,4.5vw,68px)] leading-none">
+      {metrics[3].number}
+    </p>
+    <p className="f-sans-r mt-2 text-[14px] text-[#d8d1c5]">
+      {metrics[3].label}
+    </p>
+  </div>
+
+</div>
+
+    </section>
+  );
+}
+
+
+
 
 export default function App() {
   return (
@@ -723,54 +1252,11 @@ export default function App() {
 
       <Experience />
 
-      <section className="bg-[#1b3022] px-[clamp(20px,2.8vw,40px)] pb-[40px] pt-[80px] text-[#f9f6e6]">
-        <Reveal>
-          <p className="f-sans text-[14px] tracking-[-0.35px]">
-            THE GREATBUILD <i>WAY</i>
-          </p>
+<GreatBuildsWay />
 
-          <h2 className="mt-[20px] text-[clamp(40px,3.9vw,56px)] leading-[1.2] tracking-[-1.4px]">
-            <span className="f-serif-m">Purpose in </span>
-            <span className="f-serif-bi">Every Step</span>
-          </h2>
-        </Reveal>
+<ImpactSequence />
 
-        <div className="mt-[80px] grid gap-[40px] border-t border-white/15 pt-[40px] md:grid-cols-3">
-          {[
-            [
-              "01",
-              "Land, chosen with care",
-              "Every plot begins with the terrain, the light and the way water moves across it.",
-            ],
-            [
-              "02",
-              "Built around nature",
-              "Green corridors, native planting and open courts shape how each community breathes.",
-            ],
-            [
-              "03",
-              "Made to gather",
-              "Shared spaces designed for long evenings, slow mornings and the people you love.",
-            ],
-          ].map(([n, t, d], i) => (
-            <Reveal key={n} delay={i * 120}>
-              <span className="f-serif-bi text-[20px] text-[#c9a24b]">
-                {n}
-              </span>
-
-              <h3 className="f-serif-m mt-[12px] text-[32px] leading-[1.1]">
-                {t}
-              </h3>
-
-              <p className="f-sans-r mt-[12px] max-w-[360px] text-[16px] leading-[1.5] text-[#d8d1c5]">
-                {d}
-              </p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="flex flex-col items-center gap-[40px] px-[clamp(20px,2.8vw,40px)] py-[80px]">
+<section className="flex flex-col items-center gap-[40px] px-[clamp(20px,2.8vw,40px)] py-[80px]">
         <Reveal>
           <h2 className="max-w-[476px] text-center text-[clamp(40px,3.9vw,56px)] leading-none tracking-[-1.4px] text-[#1b3022]">
             <span className="f-serif-m">The Story Behind </span>
