@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
 import NriPage from "./NriPage";
 import UpcomingPage from "./UpcomingPage";
+import AboutPage from "./AboutPage";
+import CountrySidePage from "./CountrySidePage";
+import ShankarEnclavePage from "./ShankarEnclavePage";
 
 const A = "/assets";
 
@@ -230,6 +233,14 @@ const settle = ease(range(p, 0.04, 0.2));
   ];
 
   const active = swaps[1] > 0.5 ? 2 : swaps[0] > 0.5 ? 1 : 0;
+  const projectRoutes: Record<string, string> = {
+  "Country Side": "#/country-side",
+  "Shankar Enclave": "#/shankar-enclave",
+  "Royal Greens": "#/royal-greens",
+};
+
+const activeProject = CHAPTERS[active].title.join(" ");
+const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
 
   // Per-chapter text visibility.
   const vis = [
@@ -305,7 +316,7 @@ const settle = ease(range(p, 0.04, 0.2));
             <nav className="f-sans absolute left-1/2 top-[20px] flex -translate-x-1/2 gap-8 text-[15px] tracking-[0.5px] text-white">
               {[
   { label: "PROJECTS", href: "#/upcoming" },
-  { label: "ABOUT", href: "#/" },
+  { label: "ABOUT", href: "#/about" },
   { label: "NRI", href: "#/nri" },
 ].map((item) => (
   <a
@@ -378,7 +389,7 @@ const settle = ease(range(p, 0.04, 0.2));
         {/* Projects: directional reveal transitions */}
         <div
           className="absolute inset-0 z-20"
-          style={{ pointerEvents: rise > 0.5 ? "auto" : "none" }}
+          style={{ pointerEvents: rise > 0.05 ? "auto" : "none" }}
         >
           {/* LEFT: Project images reveal from LEFT to RIGHT */}
           <div className="absolute inset-y-0 left-0 w-1/2 overflow-hidden">
@@ -497,7 +508,7 @@ const settle = ease(range(p, 0.04, 0.2));
                 </div>
 
                 <a
-                  href="#"
+                  href={projectHref}
                   className="f-sans group mt-[20px] flex h-[36px] w-[180px] items-center justify-between bg-[#f7f5f0] pl-[12px] pr-[4px] text-[14px] text-[#1b3022]"
                 >
                   View Project
@@ -1286,6 +1297,16 @@ export default function App() {
   if (route === "#/upcoming") {
     return <UpcomingPage />;
   }
+
+  if (route === "#/about") {
+    return <AboutPage />;
+  }
+
+  if (route.startsWith("#/country-side")) {
+  return <CountrySidePage />;
+}
+
+if (route.startsWith("#/shankar-enclave")) return <ShankarEnclavePage />;
 
   return (
     <main className="bg-[#fffdf0]">

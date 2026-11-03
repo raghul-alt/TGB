@@ -1,6 +1,47 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type RefObject,
+} from "react";
 
 const A = "/assets";
+
+export const clamp = (v: number, a = 0, b = 1) =>
+  Math.min(b, Math.max(a, v));
+
+export const range = (p: number, s: number, e: number) =>
+  clamp((p - s) / (e - s));
+
+export const ease = (t: number) =>
+  1 - Math.pow(1 - t, 3);
+
+export function useProgress(ref: RefObject<HTMLElement | null>) {
+  const [p, setP] = useState(0);
+
+  useEffect(() => {
+    let raf = 0;
+
+    const tick = () => {
+      const el = ref.current;
+
+      if (el) {
+        const r = el.getBoundingClientRect();
+        const total = r.height - window.innerHeight;
+        setP(clamp(-r.top / (total || 1)));
+      }
+
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(raf);
+  }, [ref]);
+
+  return p;
+}
 
 export function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -123,7 +164,7 @@ export function SiteHeader({ base, logo, className = "" }: { base: string; logo:
       </a>
       <nav className="n-sm absolute left-1/2 top-[30px] flex -translate-x-1/2 text-[clamp(14px,1.1vw,16px)] tracking-[-0.4px] max-sm:static max-sm:mt-[10px] max-sm:translate-x-0">
         <NavLink label="PROJECTS" href="#/upcoming" />
-        <NavLink label="ABOUT" href="#/" />
+        <NavLink label="ABOUT" href="#/about" />
         <NavLink label="NRI" href="#/nri" />
       </nav>
     </header>
