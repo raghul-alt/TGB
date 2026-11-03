@@ -114,24 +114,25 @@ function Story() {
           </div>
 
           <div
-            className={`absolute left-0 top-[40.9%] flex flex-col gap-[clamp(20px,3vw,40px)] ${PAD}`}
+            className={`absolute left-0 top-[40.9%] flex flex-col ${PAD}`}
             style={{ opacity: fade, transform: lift }}
           >
             <p className="n-sm text-[14px] uppercase leading-[1.5] tracking-[-0.025em] text-[#ddd]">
-              COMPLETED <span className="font-['Satoshi'] font-bold italic">PROJECT</span>
+              COMPLETED{" "}
+              <span className="font-['Satoshi'] font-bold italic">
+                PROJECT
+              </span>
             </p>
-            <h1 className="text-[clamp(72px,11.1vw,160px)] leading-[0.8] tracking-[-0.025em] text-[#fffdf0]">
+
+            <h1 className="mt-[clamp(24px,3vw,40px)] text-[clamp(72px,11.1vw,160px)] leading-[0.8] tracking-[-0.025em] text-[#fffdf0]">
               <span className="f-serif-m block">Shankar</span>
               <span className="f-serif-bi block">Enclave</span>
             </h1>
-          </div>
 
-          <p
-            className={`n-sm absolute bottom-[clamp(24px,4.8vw,64px)] left-0 max-w-[340px] text-[16px] leading-[1.5] tracking-[-0.025em] text-[#fffdf0] ${PAD}`}
-            style={{ opacity: fade, transform: lift }}
-          >
-            A thoughtfully planned community offering the opportunity to find your place, shape your future, and build towards a life that feels truly your own.
-          </p>
+            <p className="mt-[clamp(16px,1.8vw,24px)] max-w-[340px] text-[16px] leading-[1.5] tracking-[-0.025em] text-[#fffdf0]">
+              A thoughtfully planned community offering the opportunity to find your place, shape your future, and build towards a life that feels truly your own.
+            </p>
+          </div>
 
           <div
             className="absolute bottom-[25%] right-0 w-[max(320px,34.93%)] bg-[#1b3022] p-[clamp(20px,2.2vw,32px)] max-sm:w-[calc(100%-40px)]"
