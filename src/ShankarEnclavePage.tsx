@@ -17,32 +17,56 @@ const cut = (t: number) => `${(1 - t) * 100}%`;
 
 const GALLERY = [
   {
-    img: "398d9",
+    img: "66ee5",
     title: ["Timeless Forms, ", "Thoughtfully Designed"],
     text: "Every architectural element is considered with purpose, creating spaces that balance form, function, and a timeless sense of character. From the overall planning to the smallest structural details, design works together to create places that feel cohesive, refined, and enduring.",
   },
   {
-    img: "4d4d1",
+    img: "969e5",
     title: ["Nature Woven ", "Into Living"],
     text: "Green spaces and natural surroundings are thoughtfully integrated into the community, creating a seamless connection between the built environment and nature. Landscapes provide room to pause, explore, connect, and experience a more balanced way of everyday living.",
   },
   {
-    img: "969e5",
+    img: "4d4d1",
     title: ["Life Designed ", "Around You"],
     text: "Every space is shaped around the experiences that make everyday life meaningful. From moments of connection and recreation to quiet time and exploration, the community creates opportunities to live, gather, unwind, and enjoy life at your own pace.",
   },
   {
-    img: "66ee5",
+    img: "398d9",
     title: ["Thoughtful Touches, ", "Meaningful Moments"],
     text: "It is the considered details that bring a place together. From materials and finishes to shared spaces and everyday conveniences, each element is thoughtfully resolved to create an experience that feels intentional, comfortable, and lasting.",
   },
 ];
 
 const HOTSPOTS = [
-  { x: 46.9, y: 55.9, icon: "5aa80" },
-  { x: 69.2, y: 78.1, icon: "838ce" },
-  { x: 61.2, y: 15.9, icon: "f2640" },
-  { x: 16.7, y: 20.8, icon: "cb61c" },
+  {
+    x: 46.9,
+    y: 55.9,
+    icon: "5aa80",
+    title: "Green spaces",
+    text: "Green spaces are essential for urban environments, providing a breath of fresh air amidst the concrete jungle. They offer a refuge for wildlife, a place for community gatherings, and a venue for recreational activities. Parks, gardens, and green rooftops not only enhance the aesthetic appeal of a city but also contribute to the well-being of its residents by promoting outdoor activities and relaxation.",
+  },
+  {
+    x: 16.7,
+    y: 20.8,
+    icon: "cb61c",
+    title: "Community spaces",
+    text: "Community spaces are the heart of urban life, bringing people together and fostering connections. These areas, whether parks, plazas, or community centers, provide a venue for social interaction, recreation, and cultural events. Well-planned community spaces enhance accessibility, promote safety, and encourage exploration, making them essential for vibrant neighborhoods. From lively gathering spots to serene green spaces, they enrich the daily experiences of both residents and visitors alike.",
+  },
+  {
+    x: 61.2,
+    y: 15.9,
+    icon: "f2640",
+    title: "Amenities",
+    text: "Amenities play a crucial role in enhancing the quality of life in urban environments. They include features like parks, sports facilities, and community centers that cater to diverse needs. These spaces not only provide opportunities for recreation and relaxation but also serve as hubs for social interaction and community engagement. Well-designed amenities promote inclusivity, ensuring everyone can enjoy the benefits they offer.",
+  },
+  {
+    x: 69.2,
+    y: 78.1,
+    icon: "838ce",
+    title: "Roads",
+    text: "Roads are the veins of urban life, connecting neighborhoods and facilitating movement. They serve as pathways for vehicles, cyclists, and pedestrians, enabling the flow of commerce and community interaction. Well-designed roads enhance accessibility, promote safety, and encourage exploration, making them vital for a thriving city. From bustling avenues to quiet lanes, roads shape the daily experiences of residents and visitors alike.",
+  },
 ];
 
 const Shade = () => (
@@ -59,6 +83,26 @@ function Story() {
   const exit = ease(range(p, 0.13, 0.22));
   const plan = ease(range(p, 0.26, 0.35));
   const card = ease(range(p, 0.37, 0.43));
+  const hotspotProgress = range(p, 0.37, 0.64);
+
+const activeSpot = Math.min(
+  HOTSPOTS.length - 1,
+  Math.floor(hotspotProgress * HOTSPOTS.length)
+);
+const goToSpot = (i: number) => {
+  const el = ref.current;
+  if (!el) return;
+
+  const target =
+    0.37 + ((i + 0.5) / HOTSPOTS.length) * 0.27;
+
+  window.scrollTo({
+    top:
+      el.offsetTop +
+      target * (el.offsetHeight - window.innerHeight),
+    behavior: "smooth",
+  });
+};
   const landscape = ease(range(p, 0.66, 0.76));
   const future = ease(range(p, 0.84, 0.94));
   const fade = 1 - zoom;
@@ -101,10 +145,10 @@ function Story() {
             }}
           >
             <img
-              src={png("13893")}
-              alt="Shankar Enclave residential home"
-              className="absolute inset-0 size-full object-cover"
-            />
+  src={png("8cd69")}
+  alt="Shankar Enclave residential home"
+  className="absolute inset-0 size-full object-cover"
+/>
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#142219]/65 via-transparent to-black/20" />
           </div>
@@ -156,34 +200,68 @@ function Story() {
           }}
         >
           <img
-            src={png("d2634")}
+            src={png("9dd89")}
             alt="Aerial view of the Shankar Enclave neighbourhood"
             className="absolute inset-0 size-full object-cover"
           />
 
           {HOTSPOTS.map((spot, i) => (
-            <div
-              key={spot.icon}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-            >
-              <img src={`${C}/${spot.icon}.svg`} width={32} height={32} alt="" />
-            </div>
-          ))}
+  <button
+    key={spot.title}
+    type="button"
+    aria-label={spot.title}
+    onClick={() => goToSpot(i)}
+    className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+    style={{
+      left: `${spot.x + 1.11}%`,
+      top: `${spot.y + 1.92}%`,
+    }}
+  >
+    <span
+      className={`absolute -inset-[6px] rounded-full border-2 border-white transition-all duration-500 ${
+        i === activeSpot && card > 0.5
+          ? "scale-100 opacity-100"
+          : "scale-50 opacity-0"
+      }`}
+    />
+
+    <img
+      src={`${C}/${spot.icon}.svg`}
+      width={32}
+      height={32}
+      alt=""
+      className="block"
+    />
+  </button>
+))}
 
           <div
-            className="absolute bottom-0 left-0 w-[min(519px,100%)] bg-[#1b3022]"
-            style={{ clipPath: `inset(${cut(card)} 0 0 0)` }}
-          >
-            <div className="flex flex-col gap-[16px] px-[clamp(20px,2.8vw,40px)] pb-[clamp(24px,2.8vw,40px)] pt-[clamp(20px,2.5vw,36px)]">
-              <p className="n-sr text-[clamp(14px,1.39vw,20px)] leading-[1.5] tracking-[-0.025em] text-[#ddd]">
-                Green spaces are essential for urban environments, providing a breath of fresh air amidst the concrete jungle. They offer a refuge for wildlife, a place for community gatherings, and a venue for recreational activities. Parks, gardens, and green rooftops not only enhance the aesthetic appeal of a city but also contribute to the well-being of its residents by promoting outdoor activities and relaxation.
-              </p>
-              <h2 className="f-serif-m text-[clamp(28px,2.8vw,40px)] leading-none tracking-[-0.025em] text-[#fffdf0]">
-                Green spaces
-              </h2>
-            </div>
-          </div>
+  className="absolute bottom-0 left-0 w-[min(519px,100%)] bg-[#1b3022]"
+  style={{ clipPath: `inset(${cut(card)} 0 0 0)` }}
+>
+  <div className="grid px-[clamp(20px,2.8vw,40px)] pb-[clamp(24px,2.8vw,40px)] pt-[clamp(20px,2.5vw,36px)]">
+    {HOTSPOTS.map((item, i) => (
+      <div
+        key={item.title}
+        className="col-start-1 row-start-1 flex flex-col gap-[16px] transition-all duration-500 ease-out"
+        style={{
+          opacity: activeSpot === i ? 1 : 0,
+          transform: `translateY(${activeSpot === i ? 0 : 12}px)`,
+        }}
+        aria-hidden={activeSpot !== i}
+      >
+        
+        <h2 className="f-serif-m text-[clamp(28px,2.8vw,40px)] leading-none tracking-[-0.025em] text-[#fffdf0]">
+          {item.title}
+        </h2>
+
+        <p className="n-sr text-[clamp(14px,1.39vw,20px)] leading-[1.5] tracking-[-0.025em] text-[#ddd]">
+          {item.text}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>
         </div>
 
         {/* Landscape image and statement */}
@@ -192,7 +270,7 @@ function Story() {
           style={{ transform: `translateY(${(1 - landscape) * 100}%)` }}
         >
           <img
-            src={`${C}/8cd69.png`}
+            src={`${C}/landscape.png`}
             alt="A quiet outdoor space surrounded by greenery"
             className="absolute inset-0 size-full object-cover"
           />
@@ -212,10 +290,10 @@ function Story() {
           style={{ clipPath: `inset(0 0 0 ${cut(future)})` }}
         >
           <img
-            src={`${C}/landscape.png`}
-            alt=""
-            className="absolute inset-0 size-full object-cover"
-          />
+  src={png("8cd69")}
+  alt="Aerial view of Shankar Enclave"
+  className="absolute inset-0 size-full object-cover"
+/>
           <Shade />
           <p className={`n-sr absolute bottom-[clamp(32px,12vh,150px)] left-0 max-w-[524px] text-[clamp(16px,1.39vw,20px)] leading-[1.2] tracking-[-0.025em] text-[#fffdf0] ${PAD}`}>
             The right space gives you room to think beyond the present. Shankar Enclave offers the opportunity to imagine what comes next — from planning a future home to creating a place that reflects your own aspirations.

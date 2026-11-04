@@ -163,19 +163,80 @@ export function SiteHeader({ base, logo, className = "" }: { base: string; logo:
         </span>
       </a>
       <nav className="n-sm absolute left-1/2 top-[30px] flex -translate-x-1/2 text-[clamp(14px,1.1vw,16px)] tracking-[-0.4px] max-sm:static max-sm:mt-[10px] max-sm:translate-x-0">
-        <NavLink label="PROJECTS" href="#/upcoming" />
-        <NavLink label="ABOUT" href="#/about" />
-        <NavLink label="NRI" href="#/nri" />
-      </nav>
+  <div className="group relative">
+  <div className="flex cursor-pointer items-center gap-[7px] px-[16px] py-[12px]">
+    <span className="text-[#ddd] transition-colors duration-300 group-hover:text-[#ffffff]">
+  PROJECTS
+</span>
+
+    <svg
+      className="mt-[1px] size-[10px] text-[#ddd] transition-transform duration-300 group-hover:rotate-180"
+      viewBox="0 0 12 12"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.2" />
+    </svg>
+  </div>
+
+  <div className="invisible absolute left-0 top-full z-50 w-[260px] translate-y-[10px] pt-[14px] opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+    <div className="border border-[#c6a45c]/30 bg-[#17271f]/95 px-[20px] pt-[18px] pb-0 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+      <p className="mb-[12px] text-[10px] tracking-[2px] text-[#c6a45c]">
+  EXPLORE PROJECTS
+</p>
+
+<div className="-mx-[20px] h-px bg-white/15" />
+
+{[
+  { label: "Shankar Enclave", href: "#/shankar-enclave" },
+  { label: "Royal Greens", href: "#/royal-greens" },
+  { label: "Country Side", href: "#/country-side" },
+].map((project) => (
+  <a
+    key={project.href}
+    href={project.href}
+    className="group/item -mx-[20px] flex items-center justify-between px-[20px] py-[14px] text-[15px] tracking-[0.1px] text-white/75 transition-all duration-300 hover:bg-white/[0.06] hover:pl-[27px] hover:text-[#e5d2a5]"
+  >
+    <span>{project.label}</span>
+    <span className="translate-x-[-5px] text-[#ddd] opacity-0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:opacity-100">
+      →
+    </span>
+  </a>
+))}
+
+<div className="mt-[12px]">
+  <p className="relative mb-0 pb-[12px] text-[10px] tracking-[2px] text-[#c6a45c] after:absolute after:bottom-0 after:left-[-20px] after:right-[-20px] after:h-px after:bg-white/15">
+    UPCOMING PROJECT
+  </p>
+
+  <a
+    href="#/upcoming"
+    className="group/item -mx-[20px] flex items-center justify-between px-[20px] py-[14px] text-[15px] tracking-[0.1px] text-white/75 transition-all duration-300 hover:bg-white/[0.06] hover:px-[27px] hover:text-[#e5d2a5]"
+  >
+    <span>Codename: Nature</span>
+    <span className="translate-x-[-5px] text-[#ddd] opacity-0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:opacity-100">
+      →
+    </span>
+  </a>
+</div>
+    </div>
+  </div>
+</div>
+
+  <NavLink label="ABOUT" href="#/about" />
+  <NavLink label="NRI" href="#/nri" />
+</nav>
     </header>
   );
 }
 
 function NavLink({ label, href }: { label: string; href: string }) {
   return (
-    <a href={href} className="group relative block overflow-hidden px-[16px] py-[12px]">
-      <span className="block text-[#ddd] transition-all duration-300 group-hover:-translate-y-[25px] group-hover:opacity-0 group-hover:blur-[2px]">{label}</span>
-      <span className="absolute inset-x-[16px] top-[37px] text-[#ddd] opacity-0 blur-[2px] transition-all duration-300 group-hover:-translate-y-[25px] group-hover:opacity-100 group-hover:blur-0">{label}</span>
+    <a
+      href={href}
+      className="group block px-[16px] py-[12px] text-[#ddd] transition-colors duration-300 hover:text-[#ffffff]"
+    >
+      {label}
     </a>
   );
 }

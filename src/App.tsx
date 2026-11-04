@@ -4,6 +4,7 @@ import UpcomingPage from "./UpcomingPage";
 import AboutPage from "./AboutPage";
 import CountrySidePage from "./CountrySidePage";
 import ShankarEnclavePage from "./ShankarEnclavePage";
+import RoyalGreensPage from "./RoyalGreensPage";
 
 const A = "/assets";
 
@@ -132,7 +133,7 @@ function Logo({ dark = false }: { dark?: boolean }) {
   return (
     <div className="flex flex-col items-center gap-[10px]">
       <img
-        src={`${A}/${dark ? "fe748" : "d4ac7"}.svg`}
+        src={`${A}/countryside/ba7b1.svg`}
         width={98.606}
         height={48}
         alt="The Great Builds"
@@ -313,21 +314,81 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
           <header className="absolute inset-x-[clamp(20px,2.8vw,40px)] top-[20px] flex items-start justify-between">
             <Logo />
 
-            <nav className="f-sans absolute left-1/2 top-[20px] flex -translate-x-1/2 gap-8 text-[15px] tracking-[0.5px] text-white">
-              {[
-  { label: "PROJECTS", href: "#/upcoming" },
-  { label: "ABOUT", href: "#/about" },
-  { label: "NRI", href: "#/nri" },
-].map((item) => (
+            
+<nav className="n-sm absolute left-1/2 top-[10px] flex -translate-x-1/2 items-start gap-8 text-[clamp(14px,1.1vw,16px)] tracking-[-0.4px] text-white">  <div className="group relative">
+    <div className="flex cursor-pointer items-center gap-[7px] py-[12px]">
+      <span className="text-[#ddd] transition-colors duration-300 group-hover:text-[#ffffff]">
+        PROJECTS
+      </span>
+      <svg
+        className="mt-[1px] size-[10px] text-[#ddd] transition-transform duration-300 group-hover:rotate-180"
+        viewBox="0 0 12 12"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.2" />
+      </svg>
+    </div>
+
+    <div className="invisible absolute left-0 top-full z-50 w-[260px] translate-y-[10px] pt-[14px] opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+      <div className="border border-[#c6a45c]/30 bg-[#17271f]/95 px-[20px] pt-[18px] pb-0 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+        <p className="mb-[12px] text-[10px] tracking-[2px] text-[#c6a45c]">
+          EXPLORE PROJECTS
+        </p>
+
+        <div className="-mx-[20px] h-px bg-white/15" />
+
+        {[
+          { label: "Shankar Enclave", href: "#/shankar-enclave" },
+          { label: "Royal Greens", href: "#/royal-greens" },
+          { label: "Country Side", href: "#/country-side" },
+        ].map((project) => (
+          <a
+            key={project.href}
+            href={project.href}
+            className="group/item -mx-[20px] flex items-center justify-between px-[20px] py-[14px] text-[15px] tracking-[0.1px] text-white/75 transition-all duration-300 hover:bg-white/[0.06] hover:pl-[27px] hover:text-[#e5d2a5]"
+          >
+            <span>{project.label}</span>
+            <span className="translate-x-[-5px] text-[#ddd] opacity-0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:opacity-100">
+              →
+            </span>
+          </a>
+        ))}
+
+        <div className="mt-[12px]">
+          <p className="relative mb-0 pb-[12px] text-[10px] tracking-[2px] text-[#c6a45c] after:absolute after:bottom-0 after:left-[-20px] after:right-[-20px] after:h-px after:bg-white/15">
+            UPCOMING PROJECT
+          </p>
+
+          <a
+            href="#/upcoming"
+            className="group/item -mx-[20px] flex items-center justify-between px-[20px] py-[14px] text-[15px] tracking-[0.1px] text-white/75 transition-all duration-300 hover:bg-white/[0.06] hover:px-[27px] hover:text-[#e5d2a5]"
+          >
+            <span>Codename: Nature</span>
+            <span className="translate-x-[-5px] text-[#ddd] opacity-0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:opacity-100">
+              →
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <a
-    key={item.label}
-    href={item.href}
-    className="transition-opacity hover:opacity-70"
+    href="#/about"
+    className="block py-[12px] text-[#ddd] transition-colors duration-300 hover:text-[#ffffff]"
   >
-    {item.label}
+    ABOUT
   </a>
-))}
-            </nav>
+
+  <a
+    href="#/nri"
+    className="block py-[12px] text-[#ddd] transition-colors duration-300 hover:text-[#ffffff]"
+  >
+    NRI
+  </a>
+</nav>
+
           </header>
         </div>
 
@@ -1306,7 +1367,13 @@ export default function App() {
   return <CountrySidePage />;
 }
 
-if (route.startsWith("#/shankar-enclave")) return <ShankarEnclavePage />;
+if (route.startsWith("#/shankar-enclave")) {
+  return <ShankarEnclavePage />;
+}
+
+if (route.startsWith("#/royal-greens")) {
+  return <RoyalGreensPage />;
+}
 
   return (
     <main className="bg-[#fffdf0]">
