@@ -145,7 +145,7 @@ const goToSpot = (i: number) => {
             }}
           >
             <img
-  src={png("8cd69")}
+  src={png("d2634")}
   alt="Shankar Enclave residential home"
   className="absolute inset-0 size-full object-cover"
 />
