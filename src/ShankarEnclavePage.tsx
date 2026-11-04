@@ -154,7 +154,7 @@ const goToSpot = (i: number) => {
           </div>
 
           <div style={{ opacity: fade, transform: lift }}>
-            <SiteHeader base={C} logo="d4dfd" />
+            <SiteHeader base={C} logo="ade0b" />
           </div>
 
           <div
