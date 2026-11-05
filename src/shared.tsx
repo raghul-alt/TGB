@@ -6,6 +6,7 @@ import {
   type RefObject,
 } from "react";
 
+
 const A = "/assets";
 
 export const clamp = (v: number, a = 0, b = 1) =>
@@ -152,17 +153,35 @@ const PAD = "px-[clamp(20px,2.8vw,40px)]";
 
 // Inner-page header: gold logo left, centered nav with a blurred text-roll hover.
 export function SiteHeader({ base, logo, className = "" }: { base: string; logo: string; className?: string }) {
+    const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
-    <header className={`relative z-10 flex items-start justify-between pt-[20px] ${PAD} ${className}`}>
+    <header className={`fixed inset-x-0 top-0 z-[200] flex items-start justify-between pt-[20px] pb-[12px] ${PAD} ${className} ${isScrolled ? "bg-[#ffffff]/10 backdrop-blur-xl" : ""} transition-colors duration-300`}>
       <a href="#/" className="flex flex-col items-center gap-[10px]" aria-label="The Great Builds home">
-        <img src={`${base}/${logo}.svg`} width={98.6058} height={48} alt="The Great Builds" />
+        <img
+  src={`${base}/${logo}.svg`}
+  width={98.6058}
+  height={48}
+  alt="The Great Builds"
+  className="w-[85px] h-auto md:w-[98.6058px]"
+/>
         <span className="relative block h-[8.2px] w-[138.6px]">
           <img className="absolute left-0 top-[0.1px]" src={`${base}/a4ef2.svg`} width={27.8114} height={8.0057} alt="" />
           <img className="absolute left-[35.41px] top-0" src={`${base}/2dfaa.svg`} width={46.111} height={8.2112} alt="" />
           <img className="absolute left-[89.11px] top-[0.01px]" src={`${base}/b9fc6.svg`} width={49.6171} height={8.1867} alt="" />
         </span>
       </a>
-      <nav className="n-sm absolute left-1/2 top-[30px] flex -translate-x-1/2 text-[clamp(14px,1.1vw,16px)] tracking-[-0.4px] max-sm:static max-sm:mt-[10px] max-sm:translate-x-0">
+      <nav className="n-sm absolute left-1/2 top-[30px] hidden -translate-x-1/2 items-center gap-[32px] text-[clamp(14px,1.1vw,16px)] tracking-[-0.4px] md:flex">
   <div className="group relative">
   <div className="flex cursor-pointer items-center gap-[7px] px-[16px] py-[12px]">
     <span className="text-[#ddd] transition-colors duration-300 group-hover:text-[#ffffff]">
@@ -226,6 +245,103 @@ export function SiteHeader({ base, logo, className = "" }: { base: string; logo:
   <NavLink label="ABOUT" href="#/about" />
   <NavLink label="NRI" href="#/nri" />
 </nav>
+
+            
+      {/* Mobile Hamburger Menu */}
+      <details className="group absolute inset-x-0 top-0 z-[60] md:hidden">
+        <summary
+          aria-label="Toggle navigation menu"
+          className="absolute right-[clamp(20px,2.8vw,40px)] top-[28px] z-[70] flex size-[42px] cursor-pointer list-none items-center justify-center border-0 bg-transparent [&::-webkit-details-marker]:hidden"
+        >
+          {/* Hamburger */}
+          <svg
+            className="size-[22px] text-white group-open:hidden"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 7H20M4 12H20M4 17H20"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+
+          {/* Close icon */}
+          <svg
+            className="hidden size-[22px] text-white group-open:block"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M6 6L18 18M18 6L6 18"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </summary>
+
+<div className="absolute left-0 right-0 top-0 z-[60] h-fit w-full -translate-y-4 overflow-y-auto border border-[#c6a45c]/30 bg-[#17271f] px-[20px] pb-[40px] pt-[90px] text-white opacity-0 shadow-[0_16px_40px_rgba(0,0,0,0.35)] transition-all duration-300 ease-out group-open:translate-y-0 group-open:opacity-100">
+          <div className="n-sm">
+            <div className="py-[14px]">
+              <details className="group/projects">
+                <summary className="flex cursor-pointer list-none items-center justify-between text-[15px] text-white/85 [&::-webkit-details-marker]:hidden">
+                  PROJECTS
+                  <svg
+                    className="size-[12px] transition-transform duration-300 group-open/projects:rotate-180"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.2" />
+                  </svg>
+                </summary>
+
+                <div className="pt-[10px]">
+                  <p className="mb-[8px] pt-[12px] text-[10px] tracking-[2px] text-[#c6a45c]">
+                    EXPLORE PROJECTS
+                  </p>
+
+                  {[
+                    { label: "Shankar Enclave", href: "#/shankar-enclave" },
+                    { label: "Royal Greens", href: "#/royal-greens" },
+                    { label: "Country Side", href: "#/country-side" },
+                  ].map((project) => (
+                    <a
+                      key={project.href}
+                      href={project.href}
+                      className="block py-[13px] text-[15px] text-white/75"
+                    >
+                      {project.label}
+                    </a>
+                  ))}
+
+                  <p className="mb-0 mt-[12px] pt-[12px] text-[10px] tracking-[2px] text-[#c6a45c]">
+                    UPCOMING PROJECT
+                  </p>
+
+                  <a
+                    href="#/upcoming"
+                    className="block py-[13px] text-[15px] text-white/75"
+                  >
+                    Codename: Nature
+                  </a>
+                </div>
+              </details>
+            </div>
+
+            <div className="[&_a]:!px-0">
+  <NavLink label="ABOUT" href="#/about" />
+  <NavLink label="NRI" href="#/nri" />
+</div>
+          </div>
+        </div>
+        <div className="fixed inset-0 z-[50] bg-black/40" />
+      </details>
+
     </header>
   );
 }
@@ -234,7 +350,7 @@ function NavLink({ label, href }: { label: string; href: string }) {
   return (
     <a
       href={href}
-      className="group block px-[16px] py-[12px] text-[#ddd] transition-colors duration-300 hover:text-[#ffffff]"
+      className="group block px-0 py-[12px] text-[#ddd] transition-colors duration-300 hover:text-[#ffffff]"
     >
       {label}
     </a>

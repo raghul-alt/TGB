@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   ContactSection,
   Footer,
@@ -76,7 +76,37 @@ const Shade = () => (
 /* Hero, idea, masterplan and landscape storytelling share one pinned scroll stage. */
 function Story() {
   const ref = useRef<HTMLElement>(null);
-  const p = useProgress(ref);
+const p = useProgress(ref);
+const mobileRef = useRef<HTMLElement>(null);
+const mobileP = useProgress(mobileRef);
+
+const mobileZoom = ease(range(mobileP, 0, 0.35));
+const mobileDrift = ease(range(mobileP, 0.35, 0.45));
+const mobileExit = ease(range(mobileP, 0.45, 0.85));
+
+const mobileFade = 1 - mobileZoom;
+const mobileLift = `translateY(${-mobileZoom * 110}px)`;
+
+const mobilePlanRef = useRef<HTMLElement>(null);
+const mobilePlanProgress = useProgress(mobilePlanRef);
+const mobileLandscape = ease(range(mobilePlanProgress, 0.82, 0.90));
+const mobileFuture = ease(range(mobilePlanProgress, 0.94, 1.0));
+const mobileActiveSpot = Math.min(
+  HOTSPOTS.length - 1,
+  Math.floor(clamp(mobilePlanProgress) * HOTSPOTS.length)
+);
+
+const goToMobileSpot = (i: number) => {
+  const el = mobilePlanRef.current;
+  if (!el) return;
+
+  const target = (i + 0.5) / HOTSPOTS.length;
+
+  window.scrollTo({
+    top: el.offsetTop + target * (el.offsetHeight - window.innerHeight),
+    behavior: "smooth",
+  });
+};
 
   const zoom = ease(range(p, 0, 0.08));
   const drift = ease(range(p, 0.08, 0.13));
@@ -109,7 +139,216 @@ const goToSpot = (i: number) => {
   const lift = `translateY(${-zoom * 110}px)`;
 
   return (
-    <section ref={ref} className="relative h-[1050vh] bg-[#fffdf0]">
+  <>
+    <div className="md:hidden bg-[#fffdf0]">
+      {/* Mobile Hero + Idea Scroll Stage */}
+<section ref={mobileRef} className="relative h-[260svh]">
+  <div className="sticky top-0 h-svh overflow-hidden">
+
+    {/* Mobile Hero */}
+    <div
+      className="absolute inset-0 z-10 overflow-hidden"
+      style={{
+        transform: `translateY(${-mobileExit * 100}%)`,
+      }}
+    >
+      {/* Hero image zoom */}
+      <div
+        className="absolute inset-0"
+        style={{
+          transform: `translate(${-mobileZoom * 17.64}vw, ${mobileZoom * 17.07}vh) scale(${1 + mobileZoom * 0.4236})`,
+        }}
+      >
+        <img
+          src={png("d2634")}
+          alt="Shankar Enclave residential home"
+          className="absolute inset-0 size-full object-cover"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#142219]/65 via-transparent to-black/20" />
+      </div>
+
+
+      {/* Hero content fades and lifts */}
+      <div
+        className="absolute left-0 top-[40.9%] flex flex-col px-5 text-[#fffdf0]"
+        style={{
+          opacity: mobileFade,
+          transform: mobileLift,
+        }}
+      >
+        <p className="n-sm text-[12px] uppercase leading-[1.5] tracking-[-0.025em] text-[#ddd]">
+          COMPLETED{" "}
+          <span className="font-['Satoshi'] font-bold italic">
+            PROJECT
+          </span>
+        </p>
+
+        <h1 className="mt-6 text-[clamp(58px,16vw,76px)] leading-[0.82] tracking-[-0.04em]">
+          <span className="f-serif-m block">Shankar</span>
+          <span className="f-serif-bi block">Enclave</span>
+        </h1>
+
+        <p className="mt-6 max-w-[320px] text-[15px] leading-[1.5] tracking-[-0.025em]">
+          A thoughtfully planned community offering the opportunity to find
+          your place, shape your future, and build towards a life that feels
+          truly your own.
+        </p>
+      </div>
+
+      {/* Green story card */}
+      <div
+        className="absolute bottom-[25%] right-0 z-20 w-[calc(100%-40px)] bg-[#1b3022] p-5 text-[#fffdf0]"
+        style={{
+          clipPath: `inset(${(1 - mobileZoom) * 100}% 0 0 0)`,
+          transform: `translateY(${-(mobileDrift * 12 + mobileExit * 18)}vh)`,
+        }}
+      >
+        <p className="f-serif-m text-[22px] leading-[1.15] tracking-[-0.025em]">
+          Shankar Enclave is thoughtfully planned to bring together
+          well-considered spaces and future possibilities, creating a place
+          where people can put down roots and build towards a future of their own.
+        </p>
+      </div>
+    </div>
+
+    {/* The Idea Behind the Project */}
+<div className="absolute inset-0 overflow-hidden bg-[#fffdf0]">
+
+  {/* Decorative image — positioned independently */}
+  <img
+    src={png("14a21")}
+    alt="Shankar Enclave"
+    className="absolute left-[51.6%] top-0 h-full w-[38.52%] object-cover
+      max-md:left-1/2 max-md:top-[87.5%] max-md:bottom-auto
+      max-md:h-[100vw] max-md:w-[25svh]
+      max-md:-translate-x-1/2 max-md:-translate-y-1/2
+      max-md:rotate-90 max-md:object-cover"
+  />
+
+  {/* Text — same positioning as Country Side */}
+  <div className="absolute left-0 top-1/2 flex w-full max-w-[calc(61%+40px)] -translate-y-1/2 flex-col gap-[20px] max-md:max-w-full px-5">
+
+    <p className="n-sm text-[14px] uppercase leading-[1.5] tracking-[-0.025em] text-[#444342]">
+      The Idea{" "}
+      <span className="font-['Satoshi'] font-medium italic">
+        Behind the Project
+      </span>
+    </p>
+
+    <p className="text-[clamp(30px,3.9vw,56px)] leading-[1.2] tracking-[-0.025em] text-[#1e1e1e]">
+      <span className="f-serif">
+        Shankar Enclave is envisioned as a community where thoughtful
+        planning creates the foundation for future possibilities - offering{" "}
+      </span>
+      <span className="f-serif-sbi">
+        a place to plan ahead, put down roots, and shape a space around
+        your aspirations.
+      </span>
+    </p>
+
+  </div>
+</div>
+  </div>
+</section>
+
+  {/* Mobile Aerial Masterplan */}
+<section
+  ref={mobilePlanRef}
+  className="relative h-[400svh]"
+>
+  <div className="sticky top-0 flex h-svh flex-col overflow-hidden relative">
+
+  <div className="relative min-h-[40svh] flex-1 overflow-hidden bg-[#e8e8df]">
+  <img
+    src={png("9dd89")}
+    alt="Aerial view of the Shankar Enclave masterplan"
+    className="absolute inset-0 size-full object-cover"
+  />
+
+  <div className="absolute inset-x-0 bottom-0 flex flex-wrap gap-2 p-4">
+    {HOTSPOTS.map((spot, i) => (
+      <button
+        key={spot.title}
+        type="button"
+        onClick={() => goToMobileSpot(i)}
+        className={`rounded-full border px-4 py-2 text-xs backdrop-blur-md transition-colors ${
+          i === mobileActiveSpot
+            ? "border-white/70 bg-white/85 text-[#1b3022]"
+            : "border-white/40 bg-[#1b3022]/35 text-white"
+        }`}
+      >
+        {spot.title}
+      </button>
+    ))}
+  </div>
+</div>
+
+<div className="shrink-0 bg-[#1b3022] px-5 py-6 text-[#fffdf0]">
+  <h3 className="f-serif-m text-3xl leading-none tracking-[-0.025em]">
+    {HOTSPOTS[mobileActiveSpot].title}
+  </h3>
+
+  <p className="n-sr mt-4 text-sm leading-[1.6] text-[#ddd]">
+    {HOTSPOTS[mobileActiveSpot].text}
+  </p>
+</div>
+
+{/* Mobile Landscape Section - slides over Masterplan */}
+<div
+  className="absolute inset-0 z-30 bg-white"
+  style={{
+    transform: `translateY(${(1 - mobileLandscape) * 100}%)`,
+  }}
+>
+  <img
+    src={`${C}/landscape.png`}
+    alt="A quiet outdoor space surrounded by greenery"
+    className="absolute inset-0 size-full object-cover"
+  />
+
+  <Shade />
+
+  <p className="absolute bottom-10 left-0 px-5 text-[28px] leading-none tracking-[-0.025em] text-[#fffdf0]">
+    <span className="f-serif">
+      Landscapes, open spaces, and natural surroundings form an integral part
+      of the community -{" "}
+    </span>
+    <span className="f-serif-sbi">
+      creating room to slow down, connect,
+    </span>
+    <span className="f-serif"> and experience the outdoors.</span>
+  </p>
+</div>
+
+{/* Mobile Future Home - reveals from left to right */}
+<div
+  className="absolute inset-0 z-40 bg-white"
+  style={{
+    clipPath: `inset(0 0 0 ${cut(mobileFuture)})`,
+  }}
+>
+  <img
+    src={png("8cd69")}
+    alt="Aerial view of Shankar Enclave"
+    className="absolute inset-0 size-full object-cover"
+  />
+
+  <Shade />
+
+  <p className="n-sr absolute bottom-10 left-0 max-w-[564px] px-5 text-[16px] leading-[1.2] tracking-[-0.025em] text-[#fffdf0]">
+    The right space gives you room to think beyond the present. Shankar Enclave
+    offers the opportunity to imagine what comes next — from planning a future
+    home to creating a place that reflects your own aspirations.
+  </p>
+</div>
+
+  </div>
+</section>
+</div>
+
+    <section ref={ref} className="relative hidden h-[1050vh] bg-[#fffdf0] md:block">
       <div className="sticky top-0 h-svh overflow-hidden">
         {/* The Idea Behind the Project */}
         <div className="absolute inset-0 bg-[#fffdf0]">
@@ -151,10 +390,6 @@ const goToSpot = (i: number) => {
 />
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#142219]/65 via-transparent to-black/20" />
-          </div>
-
-          <div style={{ opacity: fade, transform: lift }}>
-            <SiteHeader base={C} logo="ade0b" />
           </div>
 
           <div
@@ -301,6 +536,7 @@ const goToSpot = (i: number) => {
         </div>
       </div>
     </section>
+    </>
   );
 }
 
@@ -318,7 +554,7 @@ function Gallery() {
 
   return (
     <section ref={ref} className="relative h-[600vh] bg-[#1b3022]">
-      <div className="sticky top-0 flex h-svh overflow-hidden bg-[#1b3022] max-md:flex-col">
+      <div className="sticky top-0 flex h-svh overflow-hidden bg-[#1b3022] max-md:flex-col-reverse">
         <div className="relative flex w-[34.65%] shrink-0 flex-col justify-between p-[clamp(20px,2.8vw,40px)] text-[#f7f5f0] max-md:h-[55%] max-md:w-full">
           <p className="n-sm text-[14px] uppercase leading-[1.5] tracking-[-0.025em] text-[#ddd]">
             GALLERY
@@ -386,6 +622,7 @@ function Gallery() {
 export default function ShankarEnclavePage() {
   return (
     <main className="bg-[#fffdf0]">
+            <SiteHeader base={C} logo="ade0b" />
       <Story />
       <Gallery />
       <ContactSection submit={<SubmitButton base={C} />} />

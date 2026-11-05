@@ -114,11 +114,11 @@ const goToSpot = (i: number) => {
         {/* The Idea Behind the Project */}
         <div className="absolute inset-0 bg-[#fffdf0]">
           <img
-            src={png("14a21")}
-            alt=""
-            className="absolute right-[5.5%] top-0 h-full w-[38.5%] object-cover"
-          />
-          <div className={`absolute left-0 top-1/2 flex w-full max-w-[calc(61%+40px)] -translate-y-1/2 flex-col gap-[20px] ${PAD}`}>
+  src={png("14a21")}
+  alt=""
+  className="absolute right-[5.5%] top-0 h-full w-[38.5%] object-cover max-md:left-1/2 max-md:top-[87.5%] max-md:bottom-auto max-md:h-[100vw] max-md:w-[25svh] max-md:-translate-x-1/2 max-md:-translate-y-1/2 max-md:rotate-90 max-md:object-cover"
+/>
+          <div className={`absolute left-0 top-1/2 flex w-full max-w-[calc(61%+40px)] max-md:max-w-none -translate-y-1/2 flex-col gap-[20px] ${PAD}`}>
             <p className="n-sm text-[14px] uppercase leading-[1.5] tracking-[-0.025em] text-[#444342]">
               THE IDEA <span className="font-['Satoshi'] font-medium italic">BEHIND THE PROJECT</span>
             </p>
@@ -151,10 +151,6 @@ const goToSpot = (i: number) => {
 />
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#142219]/65 via-transparent to-black/20" />
-          </div>
-
-          <div style={{ opacity: fade, transform: lift }}>
-            <SiteHeader base="/assets/countryside" logo="ba7b1" />
           </div>
 
           <div
@@ -193,7 +189,7 @@ Royal Greens is thoughtfully envisioned as a peaceful retreat where natural surr
 
         {/* Aerial masterplan and markers */}
         <div
-          className="absolute inset-0 bg-white"
+          className="absolute inset-0 hidden bg-white md:block"
           style={{
             clipPath: `inset(${cut(plan)} 0 0 0)`,
             pointerEvents: plan > 0.5 && landscape < 0.5 ? "auto" : "none",
@@ -263,6 +259,63 @@ Royal Greens is thoughtfully envisioned as a peaceful retreat where natural surr
   </div>
 </div>
         </div>
+        {/* Mobile masterplan */}
+<div
+  className="absolute inset-0 flex flex-col bg-white md:hidden"
+  style={{
+    clipPath: `inset(${cut(plan)} 0 0 0)`,
+    pointerEvents: plan > 0.5 && landscape < 0.5 ? "auto" : "none",
+  }}
+>
+  {/* Aerial image */}
+  <div className="relative min-h-0 flex-1">
+    <img
+      src={png("66bf1")}
+      alt="Aerial masterplan of Royal Greens"
+      className="size-full object-cover"
+    />
+
+    {/* Hotspot selectors */}
+    <div className="absolute bottom-[16px] left-[12px] right-[12px] flex flex-wrap gap-[8px]">
+      {HOTSPOTS.map((spot, i) => (
+        <button
+          key={spot.title}
+          type="button"
+          onClick={() => goToSpot(i)}
+          className={`rounded-full border border-white/40 px-[14px] py-[8px] text-[12px] transition-colors ${
+            activeSpot === i
+              ? "bg-[#fffdf0] text-[#1b3022]"
+              : "bg-[#1b3022]/70 text-white"
+          }`}
+        >
+          {spot.title}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {/* Hotspot information */}
+  <div className="relative flex-none bg-[#1b3022] px-[clamp(20px,2.8vw,40px)] py-[clamp(24px,4vh,40px)]">
+    {HOTSPOTS.map((item, i) => (
+      <div
+        key={item.title}
+        className="transition-all duration-500"
+        style={{
+          display: activeSpot === i ? "flex" : "none",
+        }}
+      >
+        <div className="flex flex-col gap-[16px]">
+          <h2 className="f-serif-m text-[clamp(28px,7vw,36px)] leading-none text-[#fffdf0]">
+            {item.title}
+          </h2>
+          <p className="n-sr text-[14px] leading-[1.5] text-[#ddd]">
+            {item.text}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
 
         {/* Landscape image and statement */}
         <div
@@ -344,10 +397,10 @@ function PlotOptions() {
         }
       `}</style>
 
-      <div className="grid min-h-[calc(100svh-12vw)] grid-cols-2 items-stretch gap-[clamp(40px,5vw,80px)] max-md:grid-cols-1">
+      <div className="grid min-h-[calc(100svh-12vw)] grid-cols-2 items-stretch gap-[clamp(40px,5vw,80px)] max-md:grid-cols-1 max-md:grid-rows-[auto_minmax(0,1fr)]">
 
         {/* Left content */}
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between max-md:justify-start">
           <div>
             <p className="n-sm text-[14px] uppercase tracking-[-0.025em]">
               PLOT <span className="font-['Satoshi'] font-bold italic">OPTIONS</span>
@@ -363,7 +416,7 @@ function PlotOptions() {
             </h2>
           </div>
 
-          <p className="n-sr max-w-[530px] text-[clamp(16px,1.35vw,20px)] leading-[1.3] tracking-[-0.025em] text-[#34463a] max-md:mt-12">
+          <p className="n-sr max-w-[530px] text-[clamp(16px,1.35vw,20px)] leading-[1.3] tracking-[-0.025em] text-[#34463a] max-md:mt-6">
             Carefully designed plots available in various sizes to
             accommodate diverse lifestyles, ranging from a charming
             family residence to a large, modern estate ready for the future.
@@ -371,11 +424,11 @@ function PlotOptions() {
         </div>
 
         {/* Right image and selector */}
-        <div className="relative flex items-center justify-center">
-          <div className="relative w-full">
+        <div className="relative flex min-h-0 items-center justify-center max-md:h-full">
+  <div className="relative h-full w-full">
 
             {/* Layered image reveal */}
-            <div className="relative aspect-square w-full overflow-hidden">
+            <div className="relative h-full min-h-0 w-full overflow-hidden">
 
               {/* Previous image stays underneath */}
               <img
@@ -434,6 +487,7 @@ function PlotOptions() {
 export default function RoyalGreensPage() {
   return (
     <main className="bg-[#fffdf0]">
+            <SiteHeader base="/assets/countryside" logo="ba7b1" />
       <Story />
       <PlotOptions />
       <ContactSection submit={<SubmitButton base={C} />} />

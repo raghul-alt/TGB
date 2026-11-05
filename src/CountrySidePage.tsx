@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ShaderFill } from "./lib/custom-effect-runtime/index";
 import {
   setup as setupFooterShader,
@@ -80,8 +80,8 @@ window.scrollTo({
       <div className="sticky top-0 h-svh overflow-hidden">
         {/* The idea behind the project (stationary beneath the hero) */}
         <div className="absolute inset-0 bg-[#fffdf0]">
-          <img src={png("14a21")} alt="" className="absolute left-[51.6%] top-0 h-full w-[38.52%] object-cover max-md:left-[60%] max-md:w-[40%]" />
-          <div className={`absolute left-0 top-1/2 flex w-full max-w-[calc(61%+40px)] -translate-y-1/2 flex-col gap-[20px] max-md:max-w-[72%] ${PAD}`}>
+          <img src={png("14a21")} alt="" className="absolute left-[51.6%] top-0 h-full w-[38.52%] object-cover max-md:left-1/2 max-md:top-[87.5%] max-md:bottom-auto max-md:h-[100vw] max-md:w-[25svh] max-md:-translate-x-1/2 max-md:-translate-y-1/2 max-md:rotate-90 max-md:object-cover" />
+          <div className={`absolute left-0 top-1/2 flex w-full max-w-[calc(61%+40px)] -translate-y-1/2 flex-col gap-[20px] max-md:max-w-full ${PAD}`}>
             <p className="n-sm text-[14px] uppercase leading-[1.5] tracking-[-0.025em] text-[#444342]">
               The Idea <span className="font-['Satoshi'] font-medium italic">Behind the Project</span>
             </p>
@@ -103,9 +103,6 @@ window.scrollTo({
             <img src={png("636c6")} alt="" className="absolute inset-0 size-full object-cover" />
             <img src={png("9aee4")} alt="A couple chatting in a warmly lit modern kitchen" className="absolute inset-0 size-full object-cover" />
             <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(90.42deg, rgba(0,0,0,0.6) 0.21%, rgba(102,102,102,0) 69.8%)" }} />
-          </div>
-          <div style={{ opacity: fade, transform: lift }}>
-            <SiteHeader base={C} logo="ba7b1" />
           </div>
           
 <div
@@ -142,38 +139,105 @@ window.scrollTo({
 </div>
         </div>
 
+        
         {/* Masterplan with hotspots */}
-        <div className="absolute inset-0 bg-white" style={{ clipPath: `inset(${cut(plan)} 0 0 0)`, pointerEvents: plan > 0.5 && curtain < 0.5 ? "auto" : "none" }}>
-          <img src={png("bb5a7")} alt="Aerial view of the Country Side masterplan" className="absolute inset-0 size-full object-cover" />
-          {HOTSPOTS.map((h, i) => (
-            <button
-              key={h.title}
-              type="button"
-              aria-label={h.title}
-              onClick={() => goToSpot(i)}
-              className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-              style={{ left: `${h.x + 1.11}%`, top: `${h.y + 1.92}%` }}
+        <div
+          className="absolute inset-0 bg-white"
+          style={{
+            clipPath: `inset(${cut(plan)} 0 0 0)`,
+            pointerEvents: plan > 0.5 && curtain < 0.5 ? "auto" : "none",
+          }}
+        >
+          {/* Desktop — original layout unchanged */}
+          <div className="absolute inset-0 hidden md:block">
+            <img
+              src={png("bb5a7")}
+              alt="Aerial view of the Country Side masterplan"
+              className="absolute inset-0 size-full object-cover"
+            />
+
+            {HOTSPOTS.map((h, i) => (
+              <button
+                key={h.title}
+                type="button"
+                aria-label={h.title}
+                onClick={() => goToSpot(i)}
+                className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                style={{ left: `${h.x + 1.11}%`, top: `${h.y + 1.92}%` }}
+              >
+                <span className={`absolute -inset-[6px] rounded-full border-2 border-white transition-all duration-500 ${i === spot && card > 0.5 ? "scale-100 opacity-100" : "scale-50 opacity-0"}`} />
+                <img src={`${C}/${h.icon}.svg`} width={32} height={32} alt="" className="block" />
+              </button>
+            ))}
+
+            <div
+              className="absolute bottom-0 left-0 w-[min(519px,100%)] bg-[#1b3022]"
+              style={{ clipPath: `inset(${cut(card)} 0 0 0)` }}
             >
-              <span className={`absolute -inset-[6px] rounded-full border-2 border-white transition-all duration-500 ${i === spot && card > 0.5 ? "scale-100 opacity-100" : "scale-50 opacity-0"}`} />
-              <img src={`${C}/${h.icon}.svg`} width={32} height={32} alt="" className="block" />
-            </button>
-          ))}
-          <div className="absolute bottom-0 left-0 w-[min(519px,100%)] bg-[#1b3022]" style={{ clipPath: `inset(${cut(card)} 0 0 0)` }}>
-            <div className="relative grid px-[clamp(20px,2.8vw,40px)] pb-[clamp(24px,2.8vw,40px)] pt-[clamp(20px,2.5vw,36px)]">
-              {HOTSPOTS.map((h, i) => (
-                <div
-                  key={h.title}
-                  className="col-start-1 row-start-1 flex flex-col gap-[16px] transition-all duration-500"
-                  style={{ opacity: i === spot ? 1 : 0, transform: `translateY(${i === spot ? 0 : i < spot ? -12 : 12}px)` }}
-                  aria-hidden={i !== spot}
-                >
-                  <h3 className="f-serif-m text-[clamp(28px,2.8vw,40px)] leading-none tracking-[-0.025em] text-[#fffdf0]">{h.title}</h3>
-                  <p className="n-sr text-[clamp(14px,1.39vw,20px)] leading-[1.5] tracking-[-0.025em] text-[#ddd]">{h.text}</p>
-                </div>
-              ))}
+              <div className="relative grid px-[clamp(20px,2.8vw,40px)] pb-[clamp(24px,2.8vw,40px)] pt-[clamp(20px,2.5vw,36px)]">
+                {HOTSPOTS.map((h, i) => (
+                  <div
+                    key={h.title}
+                    className="col-start-1 row-start-1 flex flex-col gap-[16px] transition-all duration-500"
+                    style={{
+                      opacity: i === spot ? 1 : 0,
+                      transform: `translateY(${i === spot ? 0 : i < spot ? -12 : 12}px)`,
+                    }}
+                    aria-hidden={i !== spot}
+                  >
+                    <h3 className="f-serif-m text-[clamp(28px,2.8vw,40px)] leading-none tracking-[-0.025em] text-[#fffdf0]">
+                      {h.title}
+                    </h3>
+                    <p className="n-sr text-[clamp(14px,1.39vw,20px)] leading-[1.5] tracking-[-0.025em] text-[#ddd]">
+                      {h.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+
+          
+{/* Mobile Masterplan — Shankar Enclave layout */}
+<div className="absolute inset-0 flex flex-col md:hidden">
+  <div className="relative min-h-[40svh] flex-1 overflow-hidden bg-[#e8e8df]">
+    <img
+      src={png("bb5a7")}
+      alt="Aerial view of the Country Side masterplan"
+      className="absolute inset-0 size-full object-cover"
+    />
+
+    <div className="absolute inset-x-0 bottom-0 flex flex-wrap gap-2 p-4">
+      {HOTSPOTS.map((h, i) => (
+        <button
+          key={h.title}
+          type="button"
+          onClick={() => goToSpot(i)}
+          className={`rounded-full border px-4 py-2 text-xs backdrop-blur-md transition-colors ${
+            i === spot
+              ? "border-white/70 bg-white/85 text-[#1b3022]"
+              : "border-white/40 bg-[#1b3022]/35 text-white"
+          }`}
+        >
+          {h.title}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div className="shrink-0 bg-[#1b3022] px-5 py-6 text-[#fffdf0]">
+    <h3 className="f-serif-m text-3xl leading-none tracking-[-0.025em]">
+      {HOTSPOTS[spot].title}
+    </h3>
+
+    <p className="n-sr mt-4 text-sm leading-[1.6] text-[#ddd]">
+      {HOTSPOTS[spot].text}
+    </p>
+  </div>
+</div>
+
         </div>
+
 
         {/* Curtain room, sliding up over the masterplan */}
         <div className="absolute inset-0 bg-white" style={{ transform: `translateY(${(1 - curtain) * 100}%)` }}>
@@ -209,8 +273,8 @@ function Living() {
   const imageOffsets = [-203, -153, -93, 7, 97];
 
   return (
-    <section className="bg-[#fffdf0] py-[clamp(72px,14vh,160px)]">
-      <div className={`flex flex-col gap-[40px] ${PAD}`}>
+    <section className="bg-[#fffdf0] py-[clamp(40px,7vh,80px)] md:py-[clamp(72px,14vh,160px)]">
+      <div className={`flex min-h-[calc(100svh-80px)] flex-col gap-[24px] md:min-h-0 md:gap-[40px] ${PAD}`}>
 
         {/* Section heading */}
         <div className="relative flex flex-col gap-[20px]">
@@ -236,7 +300,7 @@ function Living() {
           {LIVING.map((item, i) => (
             <li
               key={item.text}
-              className="relative z-0 flex h-[92px] items-center border-b border-black/10"
+              className="relative z-0 flex h-[64px] md:h-[92px] items-center border-b border-black/10"
             >
               <button
                 type="button"
@@ -255,7 +319,7 @@ function Living() {
 
 {/* Portrait viewport — vertical movement + image reveal */}
 <div
-  className="pointer-events-none absolute left-[55.9%] top-0 z-20 aspect-[4/5] w-[clamp(160px,29.4vw,400px)] overflow-hidden"
+  className="pointer-events-none absolute left-[55.9%] top-0 z-20 hidden aspect-[4/5] w-[clamp(160px,29.4vw,400px)] overflow-hidden md:block"
   style={{
     transform: `translate3d(0, ${imageOffsets[active]}px, 0)`,
     transition: "transform 1000ms cubic-bezier(0.82, 0.01, 0.24, 1)",
@@ -290,6 +354,34 @@ function Living() {
 
 
         </ul>
+        {/* Mobile static image */}
+<div className="relative min-h-[280px] flex-1 w-full self-stretch overflow-hidden md:hidden">
+  {LIVING.map((item, i) => (
+    <div
+      key={item.text}
+      className="absolute inset-0"
+      style={{
+        zIndex: i,
+        clipPath:
+          active === i
+            ? "inset(0 0 0 0)"
+            : "inset(0 0 100% 0)",
+        transition:
+          "clip-path 1000ms cubic-bezier(0.82, 0.01, 0.24, 1)",
+      }}
+    >
+      {item.layers.map((layer) => (
+        <img
+          key={layer}
+          src={png(layer)}
+          alt=""
+          draggable={false}
+          className="absolute inset-0 size-full object-cover"
+        />
+      ))}
+    </div>
+  ))}
+</div>
       </div>
     </section>
   );
@@ -299,7 +391,50 @@ function Living() {
 /* Highlights slide sideways, then the gallery wipes up and steps through its slides. */
 function DetailsGallery() {
   const ref = useRef<HTMLElement>(null);
+  const highlightsRef = useRef<HTMLDivElement>(null);
+  const lastHighlightRef = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
+  const mobileGalleryRef = useRef<HTMLDivElement>(null);
+
+const mobileGalleryStartProgress = useRef<number | null>(null);
+const mobileGalleryProgressRef = useRef(0);
+
+
+const mobileGalleryProgress = useProgress(mobileGalleryRef);
+mobileGalleryProgressRef.current = mobileGalleryProgress;
+
+const mobileGalleryReveal =
+  mobileGalleryStartProgress.current !== null
+    ? ease(
+        range(
+          mobileGalleryProgress,
+          mobileGalleryStartProgress.current,
+          mobileGalleryStartProgress.current + 0.25
+        )
+      )
+    : 0;
+
+useEffect(() => {
+  const checkLastCard = () => {
+    const card = lastHighlightRef.current;
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+
+    if (
+  rect.top <= window.innerHeight / 2 &&
+  rect.bottom >= window.innerHeight / 2 &&
+  mobileGalleryStartProgress.current === null
+) {
+  mobileGalleryStartProgress.current = mobileGalleryProgressRef.current;
+}
+  };
+
+  window.addEventListener("scroll", checkLastCard, { passive: true });
+  checkLastCard();
+
+  return () => window.removeEventListener("scroll", checkLastCard);
+}, []);
   const p = useProgress(ref);
   const slide = ease(range(p, 0.02, 0.32));
   const gallery = ease(range(p, 0.34, 0.44));
@@ -310,9 +445,12 @@ function DetailsGallery() {
   const overflow = track.current ? Math.max(0, track.current.scrollWidth - track.current.parentElement!.clientWidth) : 0;
 
   return (
-    <section ref={ref} className="relative h-[900vh] bg-[#fffdf0]">
-      <div className="sticky top-0 h-svh overflow-hidden">
-        <div className="flex h-full flex-col justify-center gap-[clamp(24px,3vw,40px)]">
+    <section ref={ref} className="relative h-auto bg-[#fffdf0] md:h-[900vh]">
+<div
+  ref={highlightsRef}
+  className="relative min-h-svh overflow-visible md:sticky md:top-0 md:h-svh md:overflow-hidden"
+>
+          <div className="flex h-full flex-col justify-center gap-[clamp(24px,3vw,40px)]">
           <div className={`flex flex-col gap-[20px] ${PAD}`}>
             <p className="n-sm text-[14px] uppercase leading-[1.5] tracking-[-0.025em] text-[#444342]">
               PROJECT <span className="font-['Satoshi'] font-medium italic">HIGHLIGHTS</span>
@@ -322,10 +460,18 @@ function DetailsGallery() {
               <span className="f-serif-sbi">That Matter</span>
             </h2>
           </div>
-          <div className="overflow-hidden pl-[clamp(20px,2.8vw,40px)]">
-            <div ref={track} className="flex w-max gap-[20px] pr-[clamp(20px,2.8vw,40px)]" style={{ transform: `translateX(${-slide * overflow}px)` }}>
-              {DETAILS.map((d) => (
-                <article key={d.label} className="relative aspect-[850/560] w-[min(850px,82vw,calc((100svh-260px)*1.518))] shrink-0 overflow-hidden">
+          <div className="overflow-visible px-[clamp(20px,2.8vw,40px)] md:overflow-hidden md:pl-[clamp(20px,2.8vw,40px)] md:pr-0">
+  <div
+    ref={track}
+    className="flex w-full flex-col gap-[20px] md:w-max md:flex-row md:pr-[clamp(20px,2.8vw,40px)]"
+    style={{ transform: `translateX(${-slide * overflow}px)` }}
+  >
+              {DETAILS.map((d, i) => (
+  <article
+    ref={i === DETAILS.length - 1 ? lastHighlightRef : undefined}
+    key={d.label}
+  className="relative aspect-[16/9] w-full shrink-0 overflow-hidden md:aspect-[850/560] md:w-[min(850px,82vw,calc((100svh-260px)*1.518))]"
+>
                   <div className="absolute inset-0 bg-[#d9d9d9]" />
                   {d.layers.map((l, j) => (
                     <img key={l} src={png(l)} alt={j === d.layers.length - 1 ? d.label : ""} className="absolute inset-0 size-full object-cover" />
@@ -341,8 +487,18 @@ function DetailsGallery() {
           </div>
         </div>
 
+          </div>
+
         {/* Gallery */}
-        <div className="absolute inset-0 flex flex-col-reverse bg-[#1b3022] md:flex-row" style={{ clipPath: `inset(${cut(gallery)} 0 0 0)` }}>
+        <div ref={mobileGalleryRef} className="relative z-20 -mt-[100svh] min-h-[300vh] md:mt-0 md:contents">
+  <div className="sticky top-0 min-h-svh md:sticky md:top-0 md:h-svh md:overflow-hidden">
+        <div
+  className="relative flex min-h-svh flex-col-reverse bg-[#1b3022] md:absolute md:inset-0 md:flex-row [clip-path:var(--mobile-gallery-clip)] md:[clip-path:var(--desktop-gallery-clip)]"
+  style={{
+    "--mobile-gallery-clip": `inset(${cut(mobileGalleryReveal)} 0 0 0)`,
+    "--desktop-gallery-clip": `inset(${cut(gallery)} 0 0 0)`,
+  } as React.CSSProperties}
+>
           <div className="relative flex flex-1 flex-col justify-between p-[clamp(20px,2.8vw,40px)] md:w-[34.65%] md:flex-none">
             <p className="n-sm text-[14px] uppercase leading-[1.5] tracking-[-0.025em] text-[#ddd]">GaLLERY</p>
             <div className="flex items-center justify-end gap-[20px] md:mt-[10vh]">
@@ -376,7 +532,7 @@ function DetailsGallery() {
               ))}
             </div>
           </div>
-          <div className="relative h-[45%] shrink-0 overflow-hidden md:h-full md:flex-1">
+          <div className="relative h-[45svh] min-h-[300px] shrink-0 overflow-hidden md:h-full md:min-h-0 md:flex-1">
             {GALLERY.map((s, i) => (
               <img
                 key={s.img}
@@ -389,6 +545,8 @@ function DetailsGallery() {
           </div>
         </div>
       </div>
+       </div>
+      
     </section>
   );
 }
@@ -421,6 +579,7 @@ const footerShader = {
 export default function CountrySidePage() {
   return (
     <main className="bg-[#fffdf0]">
+            <SiteHeader base={C} logo="ba7b1" />
       <Story />
       <Living />
       <DetailsGallery />
