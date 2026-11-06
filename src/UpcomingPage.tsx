@@ -7,7 +7,7 @@ export default function UpcomingPage() {
     <main className="bg-[#f7f5f0]">
       <section className="relative flex min-h-[clamp(560px,100svh,832px)] flex-col overflow-hidden bg-[#1b3022]">
         <img
-          src={`${U}/hero-leaves.jpg`}
+          src={`${U}/hero-leaves.webp`}
           alt="Sunlight filtering through green leaves"
           className="upcoming-bg absolute inset-0 size-full object-cover"
         />

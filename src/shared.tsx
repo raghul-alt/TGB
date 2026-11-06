@@ -62,7 +62,7 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
 export function ContactSection({ submit }: { submit?: ReactNode }) {
   return (
     <section className="relative overflow-hidden bg-[#1b3022] px-[clamp(20px,2.8vw,40px)] py-[80px]">
-      <img src={`${A}/ae1f5.png`} alt="" className="absolute inset-0 size-full object-cover mix-blend-overlay" />
+      <img src={`${A}/ae1f5.webp`} alt="" className="absolute inset-0 size-full object-cover mix-blend-overlay" />
       <div className="relative flex flex-col gap-[80px] lg:flex-row">
         <Reveal className="flex-1">
           <h2 className="text-[clamp(40px,3.9vw,56px)] leading-none tracking-[-1.4px] text-[#f7f5f0]">

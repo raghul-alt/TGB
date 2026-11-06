@@ -5,6 +5,7 @@ import AboutPage from "./AboutPage";
 import CountrySidePage from "./CountrySidePage";
 import ShankarEnclavePage from "./ShankarEnclavePage";
 import RoyalGreensPage from "./RoyalGreensPage";
+import { SiteHeader } from "./shared";
 
 const A = "/assets";
 
@@ -179,7 +180,7 @@ const Layers = ({
     {srcs.map((s) => (
       <img
         key={s}
-        src={`${A}/${s}.png`}
+        src={`${A}/${s}.webp`}
         alt=""
         className={`absolute inset-0 size-full object-cover ${className}`}
       />
@@ -311,85 +312,6 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
             <div className="absolute inset-0 bg-black/20" />
           </div>
 
-          <header className="absolute inset-x-[clamp(20px,2.8vw,40px)] top-[20px] flex items-start justify-between">
-            <Logo />
-
-            
-<nav className="n-sm absolute left-1/2 top-[10px] flex -translate-x-1/2 items-start gap-8 text-[clamp(14px,1.1vw,16px)] tracking-[-0.4px] text-white">  <div className="group relative">
-    <div className="flex cursor-pointer items-center gap-[7px] py-[12px]">
-      <span className="text-[#ddd] transition-colors duration-300 group-hover:text-[#ffffff]">
-        PROJECTS
-      </span>
-      <svg
-        className="mt-[1px] size-[10px] text-[#ddd] transition-transform duration-300 group-hover:rotate-180"
-        viewBox="0 0 12 12"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.2" />
-      </svg>
-    </div>
-
-    <div className="invisible absolute left-0 top-full z-50 w-[260px] translate-y-[10px] pt-[14px] opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-      <div className="border border-[#c6a45c]/30 bg-[#17271f]/95 px-[20px] pt-[18px] pb-0 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-        <p className="mb-[12px] text-[10px] tracking-[2px] text-[#c6a45c]">
-          EXPLORE PROJECTS
-        </p>
-
-        <div className="-mx-[20px] h-px bg-white/15" />
-
-        {[
-          { label: "Shankar Enclave", href: "#/shankar-enclave" },
-          { label: "Royal Greens", href: "#/royal-greens" },
-          { label: "Country Side", href: "#/country-side" },
-        ].map((project) => (
-          <a
-            key={project.href}
-            href={project.href}
-            className="group/item -mx-[20px] flex items-center justify-between px-[20px] py-[14px] text-[15px] tracking-[0.1px] text-white/75 transition-all duration-300 hover:bg-white/[0.06] hover:pl-[27px] hover:text-[#e5d2a5]"
-          >
-            <span>{project.label}</span>
-            <span className="translate-x-[-5px] text-[#ddd] opacity-0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:opacity-100">
-              →
-            </span>
-          </a>
-        ))}
-
-        <div className="mt-[12px]">
-          <p className="relative mb-0 pb-[12px] text-[10px] tracking-[2px] text-[#c6a45c] after:absolute after:bottom-0 after:left-[-20px] after:right-[-20px] after:h-px after:bg-white/15">
-            UPCOMING PROJECT
-          </p>
-
-          <a
-            href="#/upcoming"
-            className="group/item -mx-[20px] flex items-center justify-between px-[20px] py-[14px] text-[15px] tracking-[0.1px] text-white/75 transition-all duration-300 hover:bg-white/[0.06] hover:px-[27px] hover:text-[#e5d2a5]"
-          >
-            <span>Codename: Nature</span>
-            <span className="translate-x-[-5px] text-[#ddd] opacity-0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:opacity-100">
-              →
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <a
-    href="#/about"
-    className="block py-[12px] text-[#ddd] transition-colors duration-300 hover:text-[#ffffff]"
-  >
-    ABOUT
-  </a>
-
-  <a
-    href="#/nri"
-    className="block py-[12px] text-[#ddd] transition-colors duration-300 hover:text-[#ffffff]"
-  >
-    NRI
-  </a>
-</nav>
-
-          </header>
         </div>
 
         {/* Intro: reveals from bottom to top without sliding the section */}
@@ -403,9 +325,9 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
             willChange: "clip-path",
           }}
         >
-          <div className="absolute inset-x-0 top-[7vh] flex justify-center">
+          <div className="absolute inset-x-0 top-[24vh] md:top-[7vh] flex justify-center">
             <div
-              className="relative flex w-[min(40vw,70vh,560px)] items-start justify-between"
+              className="relative flex w-[min(82vw,120vh,560px)] md:w-[min(40vw,70vh,560px)] items-start justify-between"
               style={{
                 transform: `scale(${lerp(1.08, 1, settle)})`,
                 transformOrigin: "50% 0%",
@@ -427,7 +349,7 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
                 <div className="shelf -mx-[2.45%] h-[20px]" />
 
                 <img
-                  src={`${A}/5a274.png`}
+                  src={`${A}/5a274.webp`}
                   alt=""
                   className="pointer-events-none absolute z-0 left-[93%] top-[31%] w-[44%]"
                   style={{ transform: "scaleY(-1) rotate(180deg)" }}
@@ -453,7 +375,7 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
           style={{ pointerEvents: rise > 0.05 ? "auto" : "none" }}
         >
           {/* LEFT: Project images reveal from LEFT to RIGHT */}
-          <div className="absolute inset-y-0 left-0 w-1/2 overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-[60%] w-full overflow-hidden md:inset-y-0 md:left-0 md:right-auto md:h-auto md:w-1/2">
             {CHAPTERS.map((c, i) => {
               const progress =
                 i === 0 ? enter : swaps[i - 1];
@@ -488,14 +410,14 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
 
           {/* RIGHT: Green panel reveals from BOTTOM to TOP */}
           <div
-            className="absolute inset-y-0 right-0 w-1/2 bg-[#1b3022] text-white"
+            className="absolute inset-x-0 bottom-0 h-[40%] w-full bg-[#1b3022] text-white md:inset-y-0 md:left-auto md:right-0 md:h-auto md:w-1/2"
             style={{
               clipPath: `inset(${(1 - rise) * 100}% 0 0 0)`,
               WebkitClipPath: `inset(${(1 - rise) * 100}% 0 0 0)`,
               willChange: "clip-path",
             }}
           >
-            <div className="flex h-full flex-col justify-between gap-[24px] px-[40px] py-[40px]">
+            <div className="flex h-full flex-col justify-center gap-[16px] overflow-y-auto px-[20px] py-[28px] md:justify-between md:gap-[24px] md:overflow-visible md:px-[40px] md:py-[40px]">
               <div>
                 <div className="relative h-[34px]">
                   {CHAPTERS.map((c, i) => (
@@ -509,11 +431,11 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
                   ))}
                 </div>
 
-                <div className="relative mt-[20px] h-[clamp(112px,min(16.6vw,24vh),240px)]">
+                <div className="relative mt-[12px] h-[48px] md:mt-[20px] md:h-[clamp(112px,min(16.6vw,24vh),240px)]">
                   {CHAPTERS.map((c, i) => (
                     <h2
                       key={i}
-                      className="absolute left-0 top-0 text-[clamp(48px,min(8.3vw,12vh),120px)] leading-none tracking-[-3px]"
+                      className="absolute left-0 top-0 whitespace-nowrap text-[clamp(36px,9vw,48px)] leading-none tracking-[-1.5px] md:text-[clamp(48px,min(8.3vw,12vh),120px)] md:tracking-[-3px]"
                       style={{
                         opacity: vis[i],
                         transform: `translateY(${
@@ -521,19 +443,19 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
                         }px)`,
                       }}
                     >
-                      <span className="f-serif-m">{c.title[0]}</span>
-                      <br />
-                      <span className="f-serif-bi">{c.title[1]}</span>
+                      <span className="f-serif-m">{c.title[0]} </span>
+<span className="f-serif-bi">{c.title[1]}</span>
+<br className="hidden md:block" />
 
                     </h2>
                   ))}
                 </div>
               </div>
 
-              <div className="mx-auto w-[300px] max-w-full pb-[8vh]">
+              <div className="w-full pb-[12px] md:mx-auto md:w-[300px] md:max-w-full md:pb-[8vh]">
                 
 
-<div className="relative aspect-[3/2] max-h-[26vh] w-full overflow-hidden bg-[#d9d9d9]">
+<div className="relative hidden aspect-[3/2] max-h-[26vh] w-full overflow-hidden bg-[#d9d9d9] md:block">
   {CHAPTERS.map((c, i) => {
     const revealProgress =
   i === 0 ? 1 : swaps[i - 1];
@@ -556,7 +478,7 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
     );
   })}
 </div>
-                <div className="relative mt-[24px] h-[96px]">
+                <div className="relative mt-[8px] min-h-[96px] md:mt-[24px] md:h-[96px]">
                   {CHAPTERS.map((c, i) => (
                     <p
                       key={i}
@@ -568,19 +490,32 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
                   ))}
                 </div>
 
-                <a
-                  href={projectHref}
-                  className="f-sans group mt-[20px] flex h-[36px] w-[180px] items-center justify-between bg-[#f7f5f0] pl-[12px] pr-[4px] text-[14px] text-[#1b3022]"
-                >
-                  View Project
-                  <span className="flex size-[28px] items-center justify-center bg-[#1b3022] text-white transition-colors group-hover:bg-[#c9a24b]">
-                    →
-                  </span>
-                </a>
+                <div className="mt-[20px] flex w-full items-center justify-between md:mt-[20px]">
+  <a
+    href={projectHref}
+    className="f-sans group flex h-[36px] w-[180px] items-center justify-between bg-[#f7f5f0] pl-[12px] pr-[4px] text-[14px] text-[#1b3022]"
+  >
+    View Project
+    <span className="flex size-[28px] items-center justify-center bg-[#1b3022] text-white transition-colors group-hover:bg-[#c9a24b]">
+      →
+    </span>
+  </a>
+
+  <div className="flex flex-col gap-[4px] md:hidden">
+    {CHAPTERS.map((_, i) => (
+      <span
+        key={i}
+        className={`size-[6px] rounded-full border border-[#c9a24b] ${
+          i === active ? "bg-[#c9a24b]" : ""
+        }`}
+      />
+    ))}
+  </div>
+</div>
               </div>
             </div>
 
-            <div className="absolute bottom-[40px] right-[40px] flex flex-col gap-[4px]">
+            <div className="absolute bottom-[40px] right-[40px] hidden flex-col gap-[4px] md:flex">
               {CHAPTERS.map((_, i) => (
                 <span
                   key={i}
@@ -594,7 +529,7 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
 
           {/* Previous / next project arrows */}
           <div
-            className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2"
+            className="absolute left-1/2 top-[60%] z-10 flex -translate-x-1/2 -translate-y-1/2 md:top-1/2"
             style={{
               opacity: enter,
               pointerEvents: enter > 0.5 ? "auto" : "none",
@@ -638,25 +573,25 @@ const projectHref = projectRoutes[activeProject] ?? "#/upcoming";
 const PILLARS = [
   {
     name: "Community",
-    img: "pillars/Community.png",
+    img: "pillars/Community.webp",
     title: "Places designed to bring people together.",
     text: "We create environments where meaningful connections can grow, turning individual spaces into vibrant, connected communities.",
   },
   {
     name: "Sustainability",
-    img: "pillars/Sustainability.png",
+    img: "pillars/Sustainability.webp",
     title: "Nature is part of the foundation.",
     text: "We thoughtfully integrate green spaces, landscapes, and responsible development to create healthier environments that endure.",
   },
   {
     name: "Purpose",
-    img: "pillars/Purpose.png",
+    img: "pillars/Purpose.webp",
     title: "Every community begins with a reason.",
     text: "We design around the way people live, work and grow, so every space has a purpose behind it.",
   },
   {
     name: "Longevity",
-    img: "pillars/Longevity.png",
+    img: "pillars/Longevity.webp",
     title: "Built for today. Considered for tomorrow.",
     text: "Quality materials and enduring planning create homes and communities that age gracefully for generations.",
   },
@@ -747,7 +682,12 @@ function Experience() {
 
 const reveal = ease(range(p, 0, 0.80));
 const grow = ease(range(p, 0.16, 0.90));
-  const [active, setActive] = useState<string | null>(null);
+  const [active, setActive] = useState<string | null>(
+  typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 767px)").matches
+    ? "Unwind"
+    : null
+);
 
   
 const categories = [
@@ -756,7 +696,7 @@ const categories = [
     title: "Places Designed to Bring People Together.",
     text: "Shared spaces and thoughtful community planning create opportunities for meaningful connections.",
     grid: "col-start-1 row-span-2",
-    decoration: "Connect.png",
+    decoration: "Connect.webp",
     decorationClass: "right-[-2%] top-[-2%] h-[58%] w-[82%]",
   },
   {
@@ -764,7 +704,7 @@ const categories = [
     title: "Spaces Designed for Living.",
     text: "Thoughtfully designed spaces bring comfort, warmth, and a sense of ease to everyday life.",
     grid: "col-start-2 row-start-1",
-    decoration: "unwind.png",
+    decoration: "unwind.webp",
     decorationClass: "right-[-5%] top-[-18%] h-[85%] w-[45%]",
   },
   {
@@ -772,7 +712,7 @@ const categories = [
     title: "Discover Something New.",
     text: "Green trails, open spaces, and thoughtfully designed surroundings invite new experiences every day.",
     grid: "col-start-2 row-start-2",
-    decoration: "explore.png",
+    decoration: "explore.webp",
     decorationClass: "right-0 top-[-22%] h-[145%] w-[70%]",
   },
   {
@@ -780,7 +720,7 @@ const categories = [
     title: "Room to Grow.",
     text: "Wellness, nature, and shared spaces create opportunities to thrive together as a community.",
     grid: "col-start-3 row-start-1",
-    decoration: "Thrive.png",
+    decoration: "Thrive.webp",
     decorationClass: "right-[-1%] top-0 h-[58%] w-[42%]",
   },
   {
@@ -788,7 +728,7 @@ const categories = [
     title: "A Place to Belong.",
     text: "A community offers opportunities to build lasting connections and feel part of something meaningful.",
     grid: "col-start-3 row-start-2",
-    decoration: "Belong.png",
+    decoration: "Belong.webp",
     decorationClass: "right-[-10%] top-[-40%] h-[130%] w-[60%]",
   },
 ];
@@ -797,13 +737,12 @@ const categories = [
   return (
 <section
   ref={ref}
-className="pointer-events-none relative z-10 -mt-[100vh] h-[150vh] bg-transparent">
+className="pointer-events-none relative z-10 -mt-[100vh] h-[160vh] bg-transparent max-md:h-auto">
         <div
-  className="pointer-events-auto sticky top-0 h-screen overflow-hidden bg-[#1b3022]"
+  className="pointer-events-auto sticky top-0 h-[110vh] overflow-hidden bg-[#1b3022] pb-16 max-md:relative max-md:top-auto max-md:h-auto max-md:min-h-[110vh] max-md:overflow-visible"
   style={{
-    clipPath: `inset(${(1 - reveal) * 100}% 0 0 0)`,
-    WebkitClipPath: `inset(${(1 - reveal) * 100}% 0 0 0)`,
-    willChange: "clip-path",
+    transform: `translate3d(0, ${(1 - reveal) * 100}%, 0)`,
+    willChange: "transform",
     pointerEvents: reveal > 0.02 ? "auto" : "none",
   }}
 >
@@ -811,7 +750,7 @@ className="pointer-events-none relative z-10 -mt-[100vh] h-[150vh] bg-transparen
 <div className="absolute inset-0 z-0">
   {/* Static image layer: never scales with the reveal animation */}
   <img
-    src={`${A}/Experiencebg.png`}
+    src={`${A}/Experiencebg.webp`}
     alt=""
     className="absolute inset-0 h-full w-full"
     style={{
@@ -848,15 +787,7 @@ className="pointer-events-none relative z-10 -mt-[100vh] h-[150vh] bg-transparen
 </div>
         {/* Heading */}
         <div
-          className="relative z-10 px-[clamp(20px,2.8vw,40px)] pt-[clamp(48px,12vh,120px)] text-[#f7f5f0]"
-          style={{
-            opacity: range(p, 0, 0.24),
-            transform: `translateY(${lerp(
-              40,
-              -40,
-              ease(range(p, 0, 0.30))
-            )}px)`,
-          }}
+          className="relative z-10 px-[clamp(20px,2.8vw,40px)] pt-[clamp(32px,6vh,64px)] md:pt-[clamp(48px,10vh,120px)] text-[#f7f5f0]"
         >
           <p className="f-sans text-[14px] tracking-[-0.35px]">
             EXPERIENCE &amp; <i>LIFESTYLE</i>
@@ -870,11 +801,10 @@ className="pointer-events-none relative z-10 -mt-[100vh] h-[150vh] bg-transparen
 
         {/* Interactive grid */}
         <div
-className="absolute inset-x-[3.7%] top-[28%] bottom-[3%] z-20 grid grid-cols-[0.9fr_1fr_1fr] grid-rows-2 border-l border-t border-white/25"
+className="absolute inset-x-[3.7%] top-[34%] bottom-[10%] z-20 grid grid-cols-[0.9fr_1fr_1fr] grid-rows-2 border-l border-t border-white/25 max-md:relative max-md:inset-auto max-md:mx-[3.7%] max-md:mt-8 max-md:grid-cols-1 max-md:grid-rows-[repeat(5,minmax(190px,auto))]"
           style={{
-            opacity: range(p, 0.16, 0.50),
-            pointerEvents: reveal > 0.15 ? "auto" : "none",
-          }}
+  pointerEvents: reveal > 0.15 ? "auto" : "none",
+}}
           onMouseLeave={() => setActive(null)}
         >
           {categories.map((category) => {
@@ -883,7 +813,7 @@ className="absolute inset-x-[3.7%] top-[28%] bottom-[3%] z-20 grid grid-cols-[0.
             return (
               <div
                 key={category.name}
-                className={`${category.grid} relative min-h-0 min-w-0 overflow-hidden border-b border-r border-white/25 transition-colors duration-500`}
+                className={`${category.grid} max-md:!col-start-1 max-md:!row-start-auto max-md:!row-span-1 relative min-h-0 min-w-0 overflow-hidden border-b border-r border-white/25 transition-colors duration-500`}
                 style={{
                   backgroundColor: selected ? "#f5f2e9" : "transparent",
                 }}
@@ -931,7 +861,9 @@ className="absolute inset-x-[3.7%] top-[28%] bottom-[3%] z-20 grid grid-cols-[0.
             );
           })}
         </div>
+        
       </div>
+      
     </section>
   );
 }
@@ -945,37 +877,39 @@ function GreatBuildsWay() {
       number: "01",
       title: "Discover",
       text: "We understand the land, the location, and the people who will shape the community before defining what it should become.",
-      image: "Discover.png",
+      image: "Discover.webp",
     },
     {
       number: "02",
       title: "Design",
       text: "We transform that understanding into purposeful spaces where architecture, nature, and lifestyle come together.",
-      image: "Design.png",
+      image: "Design.webp",
     },
     {
       number: "03",
       title: "Develop",
       text: "We bring every detail to life through disciplined planning, precise execution, and uncompromising standards of quality.",
-      image: "Develop.png",
+      image: "Develop.webp",
     },
     {
       number: "04",
       title: "Deliver",
       text: "We create enduring communities that people are proud to own, live in, and be part of for years to come.",
-      image: "Deliver.png",
+      image: "Deliver.webp",
     },
   ];
 
   return (
     <section
       ref={ref}
-      className="relative h-[500vh] bg-[#1b3022]"
+      className="relative h-[520vh] bg-[#1b3022]"
       aria-label="The Greatbuild Way"
     >
+        <div className="hidden h-[10vh] md:block" aria-hidden="true" />
+
       <div className="sticky top-0 h-screen overflow-hidden bg-[#1b3022] text-[#f9f6e6]">
         {/* This heading stays fixed while the four steps change on scroll. */}
-        <header className="absolute inset-x-0 top-0 z-20 h-[27vh] border-b border-white/35 px-[clamp(20px,2.8vw,40px)] pt-[3vh]">
+        <header className="absolute inset-x-0 top-0 z-20 h-[27vh] border-b border-white/35 px-[clamp(20px,2.8vw,40px)] pt-[12vh] md:pt-[3vh]">
           <p className="f-sans text-[14px] tracking-[-0.35px]">
             THE GREATBUILD WAY
           </p>
@@ -1014,21 +948,21 @@ const translateY = (1 - enter) * 100;
     backgroundColor: "#1b3022",
   }}
               >
-                <div className="grid h-full grid-cols-[44%_56%]">
+                <div className="grid h-full grid-cols-1 md:grid-cols-[44%_56%]">
                   {/* Large step number on the left, matching the Figma frame. */}
-                  <div className="flex items-start pt-[9vh]">
-                    <span className="f-serif-bi text-[clamp(100px,12vw,180px)] leading-[0.9] tracking-[-7px]">
+                  <div className="flex items-start pt-[2vh] md:pt-[9vh]">
+  <span className="f-serif-bi text-[clamp(100px,12vw,180px)] leading-[0.9] tracking-[-7px]">
                       {step.number}
                     </span>
                   </div>
 
                   {/* Step title, wide image frame and supporting copy on the right. */}
-<div className="flex min-w-0 flex-col items-start pt-[5vh]">
+<div className="flex min-w-0 flex-col items-start pt-0 md:pt-[4.3vh]">
 <h3 className="f-serif-bi mb-[3vh] text-[clamp(28px,2.5vw,38px)] leading-none">
                         {step.title}
                     </h3>
 
-                    <div className="relative aspect-[1.78/1] max-h-[46vh] w-full overflow-hidden bg-[#344637]">
+                    <div className="relative aspect-[1.60/1] max-h-[58vh] w-full overflow-hidden bg-[#344637] md:aspect-[1.78/1] md:max-h-[46vh]">
   <img
     src={`${A}/${step.image}`}
     alt={`${step.title} — The GreatBuild Way`}
@@ -1037,8 +971,9 @@ const translateY = (1 - enter) * 100;
   />
 </div>
 
-<p className="f-sans-r mt-[2.5vh] max-w-[520px] text-[clamp(14px,1.05vw,16px)] leading-[1.5] text-[#d8d1c5]">                      {step.text}
-                    </p>
+<p className="f-sans-r mt-[2.5vh] max-w-[520px] text-[16px] leading-[1.5] text-[#d8d1c5] md:text-[clamp(14px,1.05vw,16px)]">
+  {step.text}
+</p>
                   </div>
                 </div>
               </article>
@@ -1098,16 +1033,11 @@ const imageFollow = clamp(scrollVh - 132, 0, 100);
 
   return (
     <section
-      ref={ref}
-      className="relative isolate z-10 h-[440vh] bg-[#1b3022] text-[#f7f5f0]"
-    >
-      {/* FULL-HEIGHT BACKGROUND GRID */}
-<div
-  className="pointer-events-none absolute inset-0 z-0 grid grid-cols-5"
-  style={{
-    transform: `translate3d(0, ${collageHold}vh, 0)`,
-  }}
+  ref={ref}
+  className="relative isolate z-10 h-[380vh] md:h-[450vh] bg-[#1b3022] text-[#f7f5f0]"
 >
+      {/* FULL-HEIGHT BACKGROUND GRID */}
+<div className="pointer-events-none absolute inset-0 z-0 grid grid-cols-5">
   {[0, 1, 2, 3, 4].map((line) => (
     <div
       key={line}
@@ -1115,7 +1045,6 @@ const imageFollow = clamp(scrollVh - 132, 0, 100);
     />
   ))}
 </div>
-
       {/* UNDERLAY — VISIBLE BEHIND THE VIEWPORT IMAGE */}
       <div
         className="pointer-events-none absolute left-0 top-0 z-0 h-screen w-full overflow-visible"
@@ -1154,24 +1083,27 @@ const imageFollow = clamp(scrollVh - 132, 0, 100);
         </div>
 
         {/* OUR IMPACT LABEL */}
-        <div className="absolute left-1/2 top-[7vh] z-30 -translate-x-1/2 text-center">
+        <div className="absolute left-1/2 top-[15vh] z-30 -translate-x-1/2 text-center">
           <p className="f-sans text-[14px] tracking-[1px] text-[#f7f5f0]">
             OUR <i>IMPACT</i>
           </p>
         </div>
 
         {/* THREE IMAGES — EACH ELEMENT IS RENDERED ONLY ONCE */}
-        <div className="absolute left-1/2 top-[22vh] h-[48vh] w-[min(72vw,850px)] -translate-x-1/2 overflow-visible">
+        <div className="absolute left-1/2 top-[38vh] h-[24vh] w-[90vw] -translate-x-1/2 overflow-visible md:h-[48vh] md:w-[min(72vw,850px)]">
 
           {/* IMAGE 1 — B9DF2 */}
           <div
-            className="absolute top-0 z-10 h-full w-[35%] overflow-hidden"
+            className="absolute top-0 z-10 h-full w-[42%] md:w-[35%] overflow-hidden"
             style={{
               left: `${32.5 - sideSpread * 27.5}%`,
-transform: `translate3d(${imageMove * 50.2}vw, ${imageFollow + imageMove * 23.5}vh, 0) rotate(${-7 * sideSpread * (1 - imageMove)}deg)`,            }}
+transform: window.innerWidth < 768
+  ? `rotate(${-7 * sideSpread}deg)`
+  : `translate3d(${imageMove * 50.2}vw, ${imageFollow + imageMove * 23.5}vh, 0) rotate(${-7 * sideSpread * (1 - imageMove)}deg)`,
+     }}
           >
             <img
-              src={`${A}/${projects[0]}.png`}
+              src={`${A}/${projects[0]}.webp`}
               alt=""
               className="size-full object-cover"
             />
@@ -1179,13 +1111,16 @@ transform: `translate3d(${imageMove * 50.2}vw, ${imageFollow + imageMove * 23.5}
 
           {/* IMAGE 3 — 9DD89 */}
           <div
-            className="absolute top-0 z-10 h-full w-[35%] overflow-hidden"
+            className="absolute top-0 z-10 h-full w-[42%] md:w-[35%] overflow-hidden"
             style={{
               left: `${32.5 + sideSpread * 27.5}%`,
-transform: `translate3d(${imageMove * 11}vw, ${imageFollow + imageMove * 115.8}vh, 0) rotate(${7 * sideSpread * (1 - imageMove)}deg)`,            }}
+transform: window.innerWidth < 768
+  ? `rotate(${7 * sideSpread}deg)`
+  : `translate3d(${imageMove * 11}vw, ${imageFollow + imageMove * 115.8}vh, 0) rotate(${7 * sideSpread * (1 - imageMove)}deg)`,
+         }}
           >
             <img
-              src={`${A}/${projects[2]}.png`}
+              src={`${A}/${projects[2]}.webp`}
               alt=""
               className="size-full object-cover"
             />
@@ -1193,13 +1128,15 @@ transform: `translate3d(${imageMove * 11}vw, ${imageFollow + imageMove * 115.8}v
 
           {/* IMAGE 2 — 7CAA8 */}
           <div
-            className="absolute left-[32.5%] top-0 z-30 h-full w-[35%] overflow-hidden"
+            className="absolute left-[32.5%] top-0 z-30 h-full w-[42%] md:w-[35%] overflow-hidden"
             style={{
-transform: `translate3d(${imageMove * -30.4}vw, ${imageFollow + imageMove * 82}vh, 0)`,
+transform: window.innerWidth < 768
+  ? "translate3d(0, 0, 0)"
+  : `translate3d(${imageMove * -30.4}vw, ${imageFollow + imageMove * 82}vh, 0)`,
             }}
           >
             <img
-              src={`${A}/${projects[1]}.png`}
+              src={`${A}/${projects[1]}.webp`}
               alt=""
               className="size-full object-cover"
             />
@@ -1221,59 +1158,92 @@ transform: `translate3d(${imageMove * -30.4}vw, ${imageFollow + imageMove * 82}v
             <span className="f-serif-bi">Proven by Results.</span>
           </h2>
         </div>
-
       </div>
 
-      {/* VIEWPORT IMAGE — ON TOP OF THE UNDERLAY */}
-      <div
-        className="pointer-events-none absolute left-0 top-0 z-30 h-screen w-full"
-        style={{
-          transform: `translate3d(0, ${revealHold}vh, 0)`,
-        }}
-      >
-        <div className="absolute inset-0 flex">
-          {[0, 1, 2, 3, 4].map((i) => {
-            const stripProgress = ease(
-              range(
-                viewportProgress,
-                0.05 + i * 0.09,
-                0.48 + i * 0.09
-              )
-            );
 
-            return (
-              <div
-                key={i}
-                className="relative h-full w-1/5 shrink-0 overflow-hidden"
-                style={{
-                  transform: `translate3d(0, ${-stripProgress * 100}%, 0)`,
-                  willChange: "transform",
-                }}
-              >
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `url("${A}/Viewport.png")`,
-                    backgroundSize: "500% 100%",
-                    backgroundPosition: `${i * 25}% center`,
-                    backgroundRepeat: "no-repeat",
-                  }}
-                />
-              </div>
-            );
-          })}
+      {/* VIEWPORT IMAGE — DESKTOP */}
+<div
+  className="pointer-events-none absolute left-0 top-0 z-30 hidden h-screen w-full md:block"
+  style={{
+    transform: `translate3d(0, ${revealHold}vh, 0)`,
+  }}
+>
+  <div className="absolute inset-0 flex">
+    {[0, 1, 2, 3, 4].map((i) => {
+      const stripProgress = ease(
+        range(viewportProgress, 0.05 + i * 0.09, 0.48 + i * 0.09)
+      );
+
+      return (
+        <div
+          key={i}
+          className="relative h-full w-1/5 shrink-0 overflow-hidden"
+          style={{
+            transform: `translate3d(0, ${-stripProgress * 100}%, 0)`,
+            willChange: "transform",
+          }}
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url("${A}/Viewport.webp")`,
+              backgroundSize: "500% 100%",
+              backgroundPosition: `${i * 25}% center`,
+              backgroundRepeat: "no-repeat",
+            }}
+          />
         </div>
-      </div>
+      );
+    })}
+  </div>
+</div>
+
+{/* VIEWPORT IMAGE — MOBILE */}
+<div
+  className="pointer-events-none absolute left-0 top-0 z-30 h-screen w-full md:hidden"
+  style={{
+    transform: `translate3d(0, ${revealHold}vh, 0)`,
+  }}
+>
+  <div className="absolute inset-0 flex">
+    {[0, 1, 2, 3, 4].map((i) => {
+      const stripProgress = ease(
+        range(viewportProgress, 0.05 + i * 0.09, 0.48 + i * 0.09)
+      );
+
+      return (
+        <div
+          key={i}
+          className="relative h-full w-1/5 shrink-0 overflow-hidden"
+          style={{
+            transform: `translate3d(0, ${-stripProgress * 100}%, 0)`,
+            willChange: "transform",
+          }}
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url("${A}/Viewportmobile.webp")`,
+              backgroundSize: "500% 100%",
+              backgroundPosition: `${i * 25}% center`,
+              backgroundRepeat: "no-repeat",
+            }}
+          />
+        </div>
+      );
+    })}
+  </div>
+</div>
 
       {/* FIRST 100VH — NORMAL DOCUMENT FLOW */}
       <div aria-hidden="true" className="relative h-screen" />
 
       
 {/* PHASE 2 — FIGMA-MATCHED STAGGERED LAYOUT */}
-<div className="relative z-20 h-[280vh]">
+<div className="relative z-20 h-[230vh] md:h-[280vh]">
 
   {/* INTRODUCTORY PARAGRAPH */}
-<div className="absolute left-[20%] top-[135vh] w-[39%] max-w-[560px]">
+<div className="absolute left-[20%] right-[7%] top-[135vh] md:left-[20%] md:right-auto md:w-[39%] md:max-w-[560px]">
       <p className="f-sans-r text-[clamp(13px,1.1vw,16px)] leading-[1.6] text-[#d8d1c5]">
       Our journey is reflected in more than numbers. It is measured by
       the communities we have thoughtfully planned, the quality we
@@ -1285,41 +1255,41 @@ transform: `translate3d(${imageMove * -30.4}vw, ${imageFollow + imageMove * 82}v
   </div>
 
   {/* 8+ — YEARS OF EXPERIENCE */}
-<div className="absolute left-[20%] top-[152vh]">
-      <p className="f-serif-m text-[clamp(40px,4.5vw,68px)] leading-none">
+<div className="absolute left-[20%] top-[160vh]">
+      <p className="f-serif-m text-[88px] leading-none">
       {metrics[0].number}
     </p>
-    <p className="f-sans-r mt-2 text-[14px] text-[#d8d1c5]">
+    <p className="f-sans-r mt-4 text-[14px] text-[#d8d1c5]">
       {metrics[0].label}
     </p>
   </div>
 
   {/* 3 — PROJECTS DELIVERED */}
-<div className="absolute left-[40%] top-[185vh]">
-      <p className="f-serif-m text-[clamp(40px,4.5vw,68px)] leading-none">
+<div className="absolute left-[40%] top-[193vh]">
+      <p className="f-serif-m text-[88px] leading-none">
       {metrics[1].number}
     </p>
-    <p className="f-sans-r mt-2 text-[14px] text-[#d8d1c5]">
+    <p className="f-sans-r mt-4 text-[14px] text-[#d8d1c5]">
       {metrics[1].label}
     </p>
   </div>
 
   {/* 3+ — COMMUNITIES CREATED */}
-<div className="absolute left-[60%] top-[216vh]">
-      <p className="f-serif-m text-[clamp(40px,4.5vw,68px)] leading-none">
+<div className="absolute left-[60%] top-[224vh]">
+      <p className="f-serif-m text-[88px] leading-none">
       {metrics[2].number}
     </p>
-    <p className="f-sans-r mt-2 text-[14px] text-[#d8d1c5]">
+    <p className="f-sans-r mt-4 text-[14px] text-[#d8d1c5]">
       {metrics[2].label}
     </p>
   </div>
 
   {/* 310+ — HAPPY FAMILIES */}
-<div className="absolute left-[40%] top-[247vh]">
-      <p className="f-serif-m text-[clamp(40px,4.5vw,68px)] leading-none">
+<div className="absolute left-[40%] top-[255vh]">
+      <p className="f-serif-m text-[88px] leading-none">
       {metrics[3].number}
     </p>
-    <p className="f-sans-r mt-2 text-[14px] text-[#d8d1c5]">
+    <p className="f-sans-r mt-4 text-[14px] text-[#d8d1c5]">
       {metrics[3].label}
     </p>
   </div>
@@ -1377,6 +1347,11 @@ if (route.startsWith("#/royal-greens")) {
 
   return (
     <main className="bg-[#fffdf0]">
+      <SiteHeader
+    base="/assets/countryside"
+    logo="ba7b1"
+  />
+
       <Immersive />
 
       <Pillars />
@@ -1406,7 +1381,7 @@ if (route.startsWith("#/royal-greens")) {
 
       <section className="relative overflow-hidden bg-[#1b3022] px-[clamp(20px,2.8vw,40px)] py-[80px]">
         <img
-          src={`${A}/ae1f5.png`}
+          src={`${A}/ae1f5.webp`}
           alt=""
           className="absolute inset-0 size-full object-cover mix-blend-overlay"
         />

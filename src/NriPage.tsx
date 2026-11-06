@@ -53,7 +53,7 @@ export default function NriPage() {
 
       <section className={`${PAD} pt-[31px]`}>
         <div className="relative flex h-[clamp(280px,36vw,520px)] items-center justify-center overflow-hidden">
-          <img src={`${N}/ce4df.png`} alt="Mumbai skyline at dusk seen from a terrace" className="absolute inset-0 size-full object-cover" />
+          <img src={`${N}/ce4df.webp`} alt="Mumbai skyline at dusk seen from a terrace" className="absolute inset-0 size-full object-cover" />
           <h1 className="relative whitespace-nowrap text-[clamp(56px,8.33vw,120px)] leading-[1.5] tracking-[-0.025em] text-[#1b3022]">
             <span className="n-cb">NRI </span>
             <span className="f-serif-bi">Corner</span>

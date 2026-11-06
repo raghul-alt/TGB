@@ -12,7 +12,7 @@ import {
 
 const C = "/assets/shankarenclave";
 const PAD = "px-[clamp(20px,2.8vw,40px)]";
-const png = (name: string) => `${C}/${name}.png`;
+const png = (name: string) => `${C}/${name}.webp`;
 const cut = (t: number) => `${(1 - t) * 100}%`;
 
 const GALLERY = [
@@ -54,18 +54,11 @@ const HOTSPOTS = [
     text: "Community spaces are the heart of urban life, bringing people together and fostering connections. These areas, whether parks, plazas, or community centers, provide a venue for social interaction, recreation, and cultural events. Well-planned community spaces enhance accessibility, promote safety, and encourage exploration, making them essential for vibrant neighborhoods. From lively gathering spots to serene green spaces, they enrich the daily experiences of both residents and visitors alike.",
   },
   {
-    x: 61.2,
-    y: 15.9,
-    icon: "f2640",
-    title: "Amenities",
-    text: "Amenities play a crucial role in enhancing the quality of life in urban environments. They include features like parks, sports facilities, and community centers that cater to diverse needs. These spaces not only provide opportunities for recreation and relaxation but also serve as hubs for social interaction and community engagement. Well-designed amenities promote inclusivity, ensuring everyone can enjoy the benefits they offer.",
-  },
-  {
     x: 69.2,
     y: 78.1,
     icon: "838ce",
-    title: "Roads",
-    text: "Roads are the veins of urban life, connecting neighborhoods and facilitating movement. They serve as pathways for vehicles, cyclists, and pedestrians, enabling the flow of commerce and community interaction. Well-designed roads enhance accessibility, promote safety, and encourage exploration, making them vital for a thriving city. From bustling avenues to quiet lanes, roads shape the daily experiences of residents and visitors alike.",
+    title: "Connectivity",
+    text: "Connectivity is the foundation of a well-connected community, linking neighborhoods, cities, and essential destinations. It enables seamless movement of people, goods, and services through an integrated network of roads and transport routes. Strong connectivity improves accessibility, reduces travel time, and brings opportunities closer, fostering economic growth and stronger communities. From local pathways to major highways, every connection plays a vital role in making everyday life more convenient and connected.",
   },
 ];
 
@@ -113,7 +106,7 @@ const goToMobileSpot = (i: number) => {
   const exit = ease(range(p, 0.13, 0.22));
   const plan = ease(range(p, 0.26, 0.35));
   const card = ease(range(p, 0.37, 0.43));
-  const hotspotProgress = range(p, 0.37, 0.64);
+  const hotspotProgress = range(p, 0.37, 0.57);
 
 const activeSpot = Math.min(
   HOTSPOTS.length - 1,
@@ -133,8 +126,8 @@ const goToSpot = (i: number) => {
     behavior: "smooth",
   });
 };
-  const landscape = ease(range(p, 0.66, 0.76));
-  const future = ease(range(p, 0.84, 0.94));
+  const landscape = ease(range(p, 0.59, 0.69));
+const future = ease(range(p, 0.77, 0.87));
   const fade = 1 - zoom;
   const lift = `translateY(${-zoom * 110}px)`;
 
@@ -256,7 +249,7 @@ const goToSpot = (i: number) => {
   {/* Mobile Aerial Masterplan */}
 <section
   ref={mobilePlanRef}
-  className="relative h-[400svh]"
+  className="relative h-[300svh]"
 >
   <div className="sticky top-0 flex h-svh flex-col overflow-hidden relative">
 
@@ -303,7 +296,7 @@ const goToSpot = (i: number) => {
   }}
 >
   <img
-    src={`${C}/landscape.png`}
+    src={`${C}/landscape.webp`}
     alt="A quiet outdoor space surrounded by greenery"
     className="absolute inset-0 size-full object-cover"
   />
@@ -505,7 +498,7 @@ const goToSpot = (i: number) => {
           style={{ transform: `translateY(${(1 - landscape) * 100}%)` }}
         >
           <img
-            src={`${C}/landscape.png`}
+            src={`${C}/landscape.webp`}
             alt="A quiet outdoor space surrounded by greenery"
             className="absolute inset-0 size-full object-cover"
           />

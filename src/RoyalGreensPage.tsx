@@ -12,7 +12,7 @@ import {
 
 const C = "/assets/royalgreens";
 const PAD = "px-[clamp(20px,2.8vw,40px)]";
-const png = (name: string) => `${C}/${name}.png`;
+const png = (name: string) => `${C}/${name}.webp`;
 const cut = (t: number) => `${(1 - t) * 100}%`;
 
 const GALLERY = [
@@ -44,28 +44,21 @@ const HOTSPOTS = [
     y: 55.9,
     icon: "5aa80",
     title: "Green spaces",
-    text: "Green spaces are essential for urban environments, providing a breath of fresh air amidst the concrete jungle. They offer a refuge for wildlife, a place for community gatherings, and a venue for recreational activities. Parks, gardens, and green rooftops not only enhance the aesthetic appeal of a city but also contribute to the well-being of its residents by promoting outdoor activities and relaxation.",
+    text: "Green spaces at Royal Greens go beyond landscaped gardens, bringing nature closer through thoughtfully planned berry plantations. These lush spaces offer opportunities to enjoy fresh produce, connect with nature, and experience the simple pleasures of outdoor living. Surrounded by greenery, the plantations add to the community's natural charm while creating a refreshing environment for relaxation, exploration, and a healthier lifestyle.",
   },
   {
     x: 16.7,
     y: 20.8,
     icon: "cb61c",
     title: "Community spaces",
-    text: "Community spaces are the heart of urban life, bringing people together and fostering connections. These areas, whether parks, plazas, or community centers, provide a venue for social interaction, recreation, and cultural events. Well-planned community spaces enhance accessibility, promote safety, and encourage exploration, making them essential for vibrant neighborhoods. From lively gathering spots to serene green spaces, they enrich the daily experiences of both residents and visitors alike.",
+    text: "Community spaces at Royal Greens are designed to bring residents closer to nature and create opportunities for meaningful connections. Thoughtfully planned open areas and landscaped surroundings offer room to unwind, spend quality time with family, and enjoy outdoor activities. These shared spaces foster a sense of belonging, encouraging interaction and a stronger community spirit while making everyday living more enjoyable.",
   },
   {
     x: 61.2,
     y: 15.9,
     icon: "f2640",
     title: "Amenities",
-    text: "Amenities play a crucial role in enhancing the quality of life in urban environments. They include features like parks, sports facilities, and community centers that cater to diverse needs. These spaces not only provide opportunities for recreation and relaxation but also serve as hubs for social interaction and community engagement. Well-designed amenities promote inclusivity, ensuring everyone can enjoy the benefits they offer.",
-  },
-  {
-    x: 69.2,
-    y: 78.1,
-    icon: "838ce",
-    title: "Roads",
-    text: "Roads are the veins of urban life, connecting neighborhoods and facilitating movement. They serve as pathways for vehicles, cyclists, and pedestrians, enabling the flow of commerce and community interaction. Well-designed roads enhance accessibility, promote safety, and encourage exploration, making them vital for a thriving city. From bustling avenues to quiet lanes, roads shape the daily experiences of residents and visitors alike.",
+    text: "Royal Greens offers thoughtfully curated amenities that bring comfort, recreation, and convenience into everyday living. From spaces for relaxation and outdoor activities to facilities that encourage social interaction, every amenity is designed to complement a nature-inspired lifestyle. These shared spaces create opportunities to unwind, stay active, and connect with the community, making everyday experiences more enriching.",
   },
 ];
 
@@ -83,7 +76,7 @@ function Story() {
   const exit = ease(range(p, 0.13, 0.22));
   const plan = ease(range(p, 0.26, 0.35));
   const card = ease(range(p, 0.37, 0.43));
-  const hotspotProgress = range(p, 0.37, 0.64);
+  const hotspotProgress = range(p, 0.37, 0.57);
 
 const activeSpot = Math.min(
   HOTSPOTS.length - 1,
@@ -103,8 +96,8 @@ const goToSpot = (i: number) => {
     behavior: "smooth",
   });
 };
-  const landscape = ease(range(p, 0.66, 0.76));
-  const future = ease(range(p, 0.84, 0.94));
+  const landscape = ease(range(p, 0.59, 0.69));
+const future = ease(range(p, 0.77, 0.87));
   const fade = 1 - zoom;
   const lift = `translateY(${-zoom * 110}px)`;
 
@@ -323,7 +316,7 @@ Royal Greens is thoughtfully envisioned as a peaceful retreat where natural surr
           style={{ transform: `translateY(${(1 - landscape) * 100}%)` }}
         >
           <img
-            src={`${C}/landscape.png`}
+            src={`${C}/landscape.webp`}
             alt="A quiet outdoor space surrounded by greenery"
             className="absolute inset-0 size-full object-cover"
           />

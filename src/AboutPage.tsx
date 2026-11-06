@@ -13,7 +13,7 @@ const STEPS = [
 ];
 
 const Img = ({ src, className = "" }: { src: string; className?: string }) => (
-  <img src={`${B}/${src}.png`} alt="" className={`absolute inset-0 size-full object-cover ${className}`} />
+  <img src={`${B}/${src}.webp`} alt="" className={`absolute inset-0 size-full object-cover ${className}`} />
 );
 
 /* Pinned intro: hero -> split panel wipes in (image top-down, green panel bottom-up) -> philosophy wipes up. */
@@ -29,7 +29,7 @@ function Intro() {
       <div className="sticky top-0 h-svh overflow-hidden">
         {/* Hero */}
         <div className="absolute inset-0">
-          <img src={`${B}/57b5f.png`} alt="A timber cottage behind a white picket fence" className="absolute inset-0 size-full object-cover" />
+          <img src={`${B}/57b5f.webp`} alt="A timber cottage behind a white picket fence" className="absolute inset-0 size-full object-cover" />
           <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(90.42deg, rgba(0,0,0,0.6) 0.21%, rgba(102,102,102,0) 69.8%)" }} />
           <h1
             className={`absolute bottom-[clamp(28px,4.4vw,48px)] text-[clamp(72px,11.1vw,160px)] leading-[0.8] tracking-[-0.025em] text-[#fffdf0] ${PAD}`}
@@ -48,13 +48,13 @@ function Intro() {
           <div className="relative h-1/2 overflow-hidden md:h-full md:w-1/2" style={{ clipPath: `inset(0 0 ${cut(split)} 0)` }}>
             <div className="absolute inset-0 bg-[#d9d9d9]" />
             <div className="absolute inset-0 overflow-hidden">
-              <img src={`${B}/b7007.png`} alt="" className="absolute left-[-52.66%] top-0 h-full w-[205.32%] max-w-none" />
+              <img src={`${B}/b7007.webp`} alt="" className="absolute left-[-52.66%] top-0 h-full w-[205.32%] max-w-none" />
             </div>
             <Img src="e8adc" />
             <Img src="615b7" />
             <Img src="b9df2" />
             <div className="absolute inset-0 bg-black/10" />
-            <img src={`${B}/60899.png`} alt="Reviewing a project brochure" className="absolute inset-0 size-full object-cover" />
+            <img src={`${B}/60899.webp`} alt="Reviewing a project brochure" className="absolute inset-0 size-full object-cover" />
           </div>
           <div
             className="relative flex h-1/2 flex-none flex-col justify-between gap-[16px] overflow-hidden bg-[#1b3022] px-[clamp(20px,2.8vw,40px)] py-[20px] md:h-auto md:flex-1 md:gap-[24px] md:py-[clamp(28px,5.6vw,80px)] md:w-1/2"
@@ -69,7 +69,7 @@ function Intro() {
                 We believe the places we create should do more than occupy land. They should bring people closer to nature, create opportunities for connection, and offer lasting value for generations to come.
               </p>
               <div className="relative aspect-[16/7] w-full shrink-0 md:aspect-[300/371] md:w-[clamp(110px,20.8vw,300px)]">
-                <img src={`${B}/e2e8d.png`} alt="Tree-lined boulevard through a planned township" className="absolute inset-0 size-full object-cover" />
+                <img src={`${B}/e2e8d.webp`} alt="Tree-lined boulevard through a planned township" className="absolute inset-0 size-full object-cover" />
               </div>
             </div>
           </div>
@@ -77,7 +77,7 @@ function Intro() {
 
         {/* Philosophy */}
         <div className="absolute inset-0" style={{ clipPath: `inset(${cut(philo)} 0 0 0)` }}>
-          <img src={`${B}/69b07.png`} alt="A glass-fronted sales pavilion at sunset" className="absolute inset-0 size-full object-cover" />
+          <img src={`${B}/69b07.webp`} alt="A glass-fronted sales pavilion at sunset" className="absolute inset-0 size-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.6)] from-[15.37%] to-transparent to-[53.45%]" />
           <p className={`n-sm absolute top-[40px] text-[14px] uppercase leading-[1.5] tracking-[-0.025em] text-[#f7f5f0] ${PAD}`}>
             OUR <span className="font-['Satoshi'] font-medium italic">PHILOSOPHY</span>
@@ -130,17 +130,17 @@ const drift = (speed: number) => ({
       <div className="sticky top-0 h-svh overflow-hidden">
         <div className="absolute left-[2.78%] top-[49.9%] h-[45.3%] w-[80%] min-w-[120px] md:left-[2.78%] md:top-[39.9%] md:h-[55.3%] md:w-[25%]" style={drift(70)}>
           <div className="absolute inset-0 bg-[#d9d9d9]" />
-          <img src={`${B}/9032f.png`} alt="" className="absolute inset-0 size-full object-cover" />
+          <img src={`${B}/9032f.webp`} alt="" className="absolute inset-0 size-full object-cover" />
           <div className="absolute inset-0 bg-black/20" />
         </div>
         <div className="absolute right-0 top-0 h-[22.8%] w-[70%] min-w-[140px] md:h-[72.8%] md:w-[32.4%]" style={drift(40)}>
           <div className="absolute inset-0 bg-[#d9d9d9]" />
-          <img src={`${B}/4615a.png`} alt="" className="absolute inset-0 size-full object-cover" />
+          <img src={`${B}/4615a.webp`} alt="" className="absolute inset-0 size-full object-cover" />
           <div className="absolute inset-0 bg-black/20" />
         </div>
         <div className="absolute left-[35.5%] top-[20.8%] h-[10.6%] w-[45%] min-w-[70px] md:top-[8.8%] md:h-[27.6%] md:w-[11.5%]" style={drift(110)}>
           <div className="absolute inset-0 bg-[#d9d9d9]" />
-          <img src={`${B}/7183d.png`} alt="" className="absolute inset-0 size-full object-cover" />
+          <img src={`${B}/7183d.webp`} alt="" className="absolute inset-0 size-full object-cover" />
         </div>
         <p className="absolute left-1/2 top-1/2 w-[88.1%] -translate-x-1/2 -translate-y-1/2 text-[clamp(22px,2.78vw,40px)] leading-[1.2] tracking-[-0.025em] text-[#f7f5f0]">
           <span className="f-serif-m">We exist to create thoughtfully planned communities that </span>
@@ -162,25 +162,25 @@ function GreatBuildsWay() {
       number: "01",
       title: "Discover",
       text: "We understand the land, the location, and the people who will shape the community before defining what it should become.",
-      image: "Discover.png",
+      image: "Discover.webp",
     },
     {
       number: "02",
       title: "Design",
       text: "We transform that understanding into purposeful spaces where architecture, nature, and lifestyle come together.",
-      image: "Design.png",
+      image: "Design.webp",
     },
     {
       number: "03",
       title: "Develop",
       text: "We bring every detail to life through disciplined planning, precise execution, and uncompromising standards of quality.",
-      image: "Develop.png",
+      image: "Develop.webp",
     },
     {
       number: "04",
       title: "Deliver",
       text: "We create enduring communities that people are proud to own, live in, and be part of for years to come.",
-      image: "Deliver.png",
+      image: "Deliver.webp",
     },
   ];
 

@@ -9,7 +9,7 @@ import { ContactSection, Footer, SiteHeader, SubmitButton, clamp, ease, range, u
 
 const C = "/assets/countryside";
 const PAD = "px-[clamp(20px,2.8vw,40px)]";
-const png = (n: string) => `${C}/${n}.png`;
+const png = (n: string) => `${C}/${n}.webp`;
 const cut = (t: number) => `${(1 - t) * 100}%`;
 
 const HOTSPOTS = [
@@ -241,7 +241,7 @@ window.scrollTo({
 
         {/* Curtain room, sliding up over the masterplan */}
         <div className="absolute inset-0 bg-white" style={{ transform: `translateY(${(1 - curtain) * 100}%)` }}>
-          <img src={`${C}/curtain-room.jpg`} alt="A softly lit living room seen through sheer curtains" className="absolute inset-0 size-full object-cover" />
+          <img src={`${C}/curtain-room.webp`} alt="A softly lit living room seen through sheer curtains" className="absolute inset-0 size-full object-cover" />
           <Shade />
           <p className={`absolute bottom-[clamp(32px,9vh,120px)] left-0 max-w-[calc(83.2%+40px)] text-[clamp(28px,3.9vw,56px)] leading-none tracking-[-0.025em] text-[#fffdf0] ${PAD}`}>
             <span className="f-serif">Landscapes, open spaces, and natural surroundings form an integral part of the community - </span>
