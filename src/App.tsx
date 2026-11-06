@@ -1482,24 +1482,17 @@ if (route.startsWith("#/royal-greens")) {
               </p>
 
               {[
-                "About us",
-                "Amenities",
-                "Location",
-                "Investment",
-                "FAQ's",
-                "Our Projects",
-                "Gallery",
-                "Why Gauribidanur",
-                "Contact Us",
-              ].map((l) => (
-                <a
-                  key={l}
-                  href="#"
-                  className="f-sans-r hover:text-[#c9a24b]"
-                >
-                  {l}
-                </a>
-              ))}
+  { label: "About us", href: "#/about" },
+  { label: "Contact Us", href: "#contact" },
+].map((link) => (
+  <a
+    key={link.label}
+    href={link.href}
+    className="f-sans-r hover:text-[#c9a24b]"
+  >
+    {link.label}
+  </a>
+))}
             </div>
 
             <div className="flex w-[200px] flex-col gap-[32px]">

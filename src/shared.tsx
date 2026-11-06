@@ -116,10 +116,19 @@ export function Footer() {
         </Reveal>
         <div className="flex gap-[clamp(40px,7vw,100px)] text-[16px]">
           <div className="flex w-[200px] flex-col gap-[12px] leading-[1.5]">
-            <p className="f-serif-bi tracking-[-0.4px] text-[#f7f5f0]/50">AMENITIES</p>
-            {["About us", "Amenities", "Location", "Investment", "FAQ's", "Our Projects", "Gallery", "Why Gauribidanur", "Contact Us"].map((l) => (
-              <a key={l} href="#" className="f-sans-r hover:text-[#c9a24b]">{l}</a>
-            ))}
+            <p className="f-serif-bi tracking-[-0.4px] text-[#f7f5f0]/50">ABOUT</p>
+{[
+  { label: "About us", href: "#/about" },
+  { label: "Contact Us", href: "#contact" },
+].map((link) => (
+  <a
+    key={link.label}
+    href={link.href}
+    className="f-sans-r hover:text-[#c9a24b]"
+  >
+    {link.label}
+  </a>
+))}
           </div>
           <div className="flex w-[200px] flex-col gap-[32px]">
             {[
