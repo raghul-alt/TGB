@@ -61,7 +61,7 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
 
 export function ContactSection({ submit }: { submit?: ReactNode }) {
   return (
-    <section className="relative overflow-hidden bg-[#1b3022] px-[clamp(20px,2.8vw,40px)] py-[80px]">
+    <section id="contact" className="relative overflow-hidden bg-[#1b3022] px-[clamp(20px,2.8vw,40px)] py-[80px]">
       <img src={`${A}/ae1f5.webp`} alt="" className="absolute inset-0 size-full object-cover mix-blend-overlay" />
       <div className="relative flex flex-col gap-[80px] lg:flex-row">
         <Reveal className="flex-1">
@@ -122,12 +122,20 @@ export function Footer() {
   { label: "Contact Us", href: "#contact" },
 ].map((link) => (
   <a
-    key={link.label}
-    href={link.href}
-    className="f-sans-r hover:text-[#c9a24b]"
-  >
-    {link.label}
-  </a>
+  key={link.label}
+  href={link.href}
+  onClick={(e) => {
+    if (link.href === "#contact") {
+      e.preventDefault();
+      document.getElementById("contact")?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }}
+  className="f-sans-r hover:text-[#c9a24b]"
+>
+  {link.label}
+</a>
 ))}
           </div>
           <div className="flex w-[200px] flex-col gap-[32px]">

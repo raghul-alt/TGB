@@ -1379,7 +1379,7 @@ if (route.startsWith("#/royal-greens")) {
         </Reveal>
       </section>
 
-      <section className="relative overflow-hidden bg-[#1b3022] px-[clamp(20px,2.8vw,40px)] py-[80px]">
+      <section id="contact" className="relative overflow-hidden bg-[#1b3022] px-[clamp(20px,2.8vw,40px)] py-[80px]">
         <img
           src={`${A}/ae1f5.webp`}
           alt=""
@@ -1485,13 +1485,21 @@ if (route.startsWith("#/royal-greens")) {
   { label: "About us", href: "#/about" },
   { label: "Contact Us", href: "#contact" },
 ].map((link) => (
-  <a
-    key={link.label}
-    href={link.href}
-    className="f-sans-r hover:text-[#c9a24b]"
-  >
-    {link.label}
-  </a>
+ <a
+  key={link.label}
+  href={link.href}
+  onClick={(e) => {
+    if (link.href === "#contact") {
+      e.preventDefault();
+      document.getElementById("contact")?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }}
+  className="f-sans-r hover:text-[#c9a24b]"
+>
+  {link.label}
+</a>
 ))}
             </div>
 
