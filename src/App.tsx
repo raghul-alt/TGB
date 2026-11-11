@@ -1478,7 +1478,7 @@ if (route.startsWith("#/royal-greens")) {
           <div className="flex gap-[clamp(40px,7vw,100px)] text-[16px]">
             <div className="flex w-[200px] flex-col gap-[12px] leading-[1.5]">
               <p className="f-serif-bi tracking-[-0.4px] text-[#f7f5f0]/50">
-                AMENITIES
+                ABOUT
               </p>
 
               {[
